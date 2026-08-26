@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bantu Dental Hub | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== ALL LOGIN STYLES (same as before) ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a6bdf;
+            --primary-dark: #0850a8;
+            --primary-light: #e8f0fe;
+            --dark: #0a1e2f;
+            --gray: #4a5a6e;
+            --light-gray: #f0f4f8;
+            --white: #ffffff;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.10);
+            --radius: 16px;
+            --transition: 0.3s ease;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--light-gray);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(10, 30, 47, 0.92), rgba(10, 107, 223, 0.80));
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-animation .circle:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-animation .circle:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: 5s;
+        }
+
+        .bg-animation .circle:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+            animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            padding: 48px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .login-card .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-card .logo .icon {
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .login-card .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .login-card .logo h1 .highlight {
+            color: var(--primary);
+        }
+
+        .login-card .logo p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .login-card .subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .login-card .subtitle .lock-icon {
+            margin-right: 6px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .form-group label .required {
+            color: var(--danger);
+        }
+
+        .form-group .input-wrapper {
+            position: relative;
+        }
+
+        .form-group .input-wrapper .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(10, 107, 223, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #b0b8c4;
+        }
+
+        .form-group .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+            padding: 4px;
+        }
+
+        .form-group .toggle-password:hover {
+            color: var(--dark);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+        }
+
+        .form-options .remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        .form-options .remember input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .form-options .forgot {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .form-options .forgot:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-login:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(10, 107, 223, 0.35);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .btn-login .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .btn-login.loading .spinner {
+            display: inline-block;
+        }
+
+        .btn-login.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            color: var(--danger);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            display: none;
+            margin-bottom: 16px;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .login-footer .version {
+            color: #b0b8c4;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 24px;
+            }
+
+            .login-card .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .form-options {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .bg-animation .circle:nth-child(1) {
+                width: 300px;
+                height: 300px;
+                top: -100px;
+                right: -100px;
+            }
+
+            .bg-animation .circle:nth-child(2) {
+                width: 200px;
+                height: 200px;
+                bottom: -50px;
+                left: -50px;
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80% { transform: translateX(8px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-card">
+
+            <div class="logo">
+                <span class="icon">🦷</span>
+                <h1><span class="highlight">Bantu</span>Dental hub</h1>
+                <p>Clinic Management System</p>
+            </div>
+
+            <div class="subtitle">
+                <span class="lock-icon">🔐</span> Please login to continue
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <span>❌</span>
+                <span id="errorText">Invalid username or password. Please try again.</span>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Username <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="username" placeholder="Enter your username" required autofocus />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔑</span>
+                        <input type="password" id="password" placeholder="Enter your password" required />
+                        <button type="button" class="toggle-password" onclick="togglePassword()" aria-label="Toggle password visibility">
+                            👁️
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember">
+                        <input type="checkbox" id="rememberMe" />
+                        Remember me
+                    </label>
+                    <a href="#" class="forgot" onclick="alert('Please contact the administrator to reset your password.')">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-login" id="loginBtn">
+                    <span class="btn-text">🚀 Login</span>
+                    <span class="spinner"></span>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>🦷 Bantu Dental Hub v2.0</p>
+                <p class="version">© 2026 All Rights Reserved</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ===== DEFAULT CREDENTIALS =====
+        const DEFAULT_USERNAME = 'admin';
+        const DEFAULT_PASSWORD = 'admin123';
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.toggle-password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            document.getElementById('errorText').textContent = message;
+            errorEl.classList.add('show');
+            document.querySelector('.login-card').classList.add('shake');
+            setTimeout(() => {
+                document.querySelector('.login-card').classList.remove('shake');
+            }, 500);
+        }
+
+        function hideError() {
+            document.getElementById('errorMessage').classList.remove('show');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            hideError();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const loginBtn = document.getElementById('loginBtn');
+
+            if (!username || !password) {
+                showError('Please enter both username and password.');
+                return;
+            }
+
+            loginBtn.classList.add('loading');
+
+            setTimeout(() => {
+                if (username === DEFAULT_USERNAME && password === DEFAULT_PASSWORD) {
+                    const remember = document.getElementById('rememberMe').checked;
+                    if (remember) {
+                        localStorage.setItem('rememberMe', 'true');
+                        localStorage.setItem('savedUsername', username);
+                    } else {
+                        localStorage.removeItem('rememberMe');
+                        localStorage.removeItem('savedUsername');
+                    }
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    // Redirect to homepage (dashboard)
+                    window.location.href = 'homepage.html';
+                } else {
+                    loginBtn.classList.remove('loading');
+                    showError('Invalid username or password. Please try again.');
+                    document.getElementById('password').value = '';
+                    document.getElementById('password').focus();
+                }
+            }, 1200);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const form = document.getElementById('loginForm');
+                if (form) {
+                    form.dispatchEvent(new Event('submit'));
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedUsername = localStorage.getItem('savedUsername');
+            const rememberMe = localStorage.getItem('rememberMe');
+            if (rememberMe === 'true' && savedUsername) {
+                document.getElementById('username').value = savedUsername;
+                document.getElementById('rememberMe').checked = true;
+                document.getElementById('password').focus();
+            }
+
+            if (sessionStorage.getItem('isLoggedIn') === 'true') {
+                window.location.href = 'homepage.html';
+            }
+        });
+
+        console.log('🔐 Bantu Dental Hub Login System loaded.');
+        console.log('👤 Default credentials: admin / admin123');
+    </script>
+
+</body>
+</html>

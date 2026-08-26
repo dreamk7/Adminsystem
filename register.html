@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bantu Dental Hub | Register Patient</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== SAME STYLES AS INDEX.HTML ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a6bdf;
+            --primary-dark: #0850a8;
+            --primary-light: #e8f0fe;
+            --dark: #0a1e2f;
+            --gray: #4a5a6e;
+            --light-gray: #f0f4f8;
+            --white: #ffffff;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.10);
+            --radius: 16px;
+            --transition: 0.3s ease;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--light-gray);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            padding: 0 24px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .header .logo .brand .bantu { margin-right: 6px; }
+        .header .logo .brand .dental { color: var(--primary); }
+
+        .header .back-btn {
+            color: var(--gray);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .header .back-btn:hover {
+            background: var(--light-gray);
+            color: var(--primary);
+        }
+
+        /* ===== REGISTRATION FORM ===== */
+        .form-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin: 30px 0;
+        }
+
+        .form-card h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .form-card h1 .highlight {
+            color: var(--primary);
+        }
+
+        .form-card .subtitle {
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .form-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .form-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .form-section h3 .icon {
+            margin-right: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .form-group label .required {
+            color: var(--danger);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(10, 107, 223, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-group .hint {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .form-card h1 {
+                font-size: 1.6rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .form-actions .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* ===== TOAST NOTIFICATION ===== */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-hover);
+            border-left: 4px solid var(--success);
+            max-width: 400px;
+            transform: translateX(120%);
+            transition: transform 0.5s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast .title {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .toast .message {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .toast .close-toast {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .toast .close-toast:hover {
+            color: var(--danger);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <span class="brand"><span class="bantu">🦷 Bantu</span><span class="dental">Dental hub</span></span>
+        </a>
+        <a href="index.html" class="back-btn">← Back to Dashboard</a>
+    </header>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <button class="close-toast" onclick="closeToast()">✕</button>
+        <div class="title" id="toastTitle">✅ Success!</div>
+        <div class="message" id="toastMessage">Patient registered successfully.</div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+        <div class="container">
+            <div class="form-card">
+                <h1>📋 Register <span class="highlight">New Patient</span></h1>
+                <p class="subtitle">Enter the patient's details below to generate their file, treatment plan, and receipt.</p>
+
+                <form id="registrationForm" onsubmit="registerPatient(event)">
+
+                    <!-- ===== PERSONAL INFORMATION ===== -->
+                    <div class="form-section">
+                        <h3><span class="icon">👤</span> Personal Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>First Name <span class="required">*</span></label>
+                                <input type="text" id="firstName" placeholder="Enter first name" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name <span class="required">*</span></label>
+                                <input type="text" id="lastName" placeholder="Enter last name" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Age <span class="required">*</span></label>
+                                <input type="number" id="age" placeholder="Enter age" min="1" max="120" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Gender <span class="required">*</span></label>
+                                <select id="gender" required>
+                                    <option value="">Select gender...</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number <span class="required">*</span></label>
+                                <input type="tel" id="phone" placeholder="Enter phone number" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" id="email" placeholder="Enter email address" />
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Address</label>
+                                <input type="text" id="address" placeholder="Enter full address" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== MEDICAL HISTORY ===== -->
+                    <div class="form-section">
+                        <h3><span class="icon">🏥</span> Medical History</h3>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label>Allergies</label>
+                                <input type="text" id="allergies" placeholder="e.g., Penicillin, Latex, etc." />
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Current Medications</label>
+                                <input type="text" id="medications" placeholder="e.g., Blood pressure medication, etc." />
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Medical Conditions</label>
+                                <textarea id="conditions" placeholder="e.g., Diabetes, Hypertension, etc."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== TREATMENT PLAN ===== -->
+                    <div class="form-section">
+                        <h3><span class="icon">🦷</span> Treatment Plan</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Procedure Type <span class="required">*</span></label>
+                                <select id="procedure" required>
+                                    <option value="">Select procedure...</option>
+                                    <option value="Dental Cleaning">Dental Cleaning</option>
+                                    <option value="Root Canal">Root Canal</option>
+                                    <option value="Crown">Crown</option>
+                                    <option value="Veneers">Veneers</option>
+                                    <option value="Teeth Whitening">Teeth Whitening</option>
+                                    <option value="Dental Implant">Dental Implant</option>
+                                    <option value="Extraction">Extraction</option>
+                                    <option value="Filling">Filling</option>
+                                    <option value="Braces">Braces</option>
+                                    <option value="Invisalign">Invisalign</option>
+                                    <option value="Dentures">Dentures</option>
+                                    <option value="Emergency Care">Emergency Care</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Assigned Doctor <span class="required">*</span></label>
+                                <select id="doctor" required>
+                                    <option value="">Select doctor...</option>
+                                    <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+                                    <option value="Dr. Michael Chen">Dr. Michael Chen</option>
+                                    <option value="Dr. Emily Rodriguez">Dr. Emily Rodriguez</option>
+                                    <option value="Dr. James Wilson">Dr. James Wilson</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Treatment Description</label>
+                                <textarea id="treatmentDesc" placeholder="Describe the treatment plan in detail..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Treatment Cost ($) <span class="required">*</span></label>
+                                <input type="number" id="treatmentCost" placeholder="0.00" step="0.01" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Review Date (Follow-up)</label>
+                                <input type="date" id="reviewDate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== MEDICATION PRESCRIPTION ===== -->
+                    <div class="form-section">
+                        <h3><span class="icon">💊</span> Medication Prescription</h3>
+                        <p style="color:var(--gray); font-size:0.9rem; margin-bottom:12px;">Enter medications the patient needs to take after the procedure.</p>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label>Medication Name</label>
+                                <input type="text" id="medicationName" placeholder="e.g., Amoxicillin, Ibuprofen" />
+                            </div>
+                            <div class="form-group">
+                                <label>Dosage</label>
+                                <input type="text" id="medicationDosage" placeholder="e.g., 500mg, 200mg" />
+                            </div>
+                            <div class="form-group">
+                                <label>Frequency</label>
+                                <select id="medicationFrequency">
+                                    <option value="">Select frequency...</option>
+                                    <option value="Once daily">Once daily</option>
+                                    <option value="Twice daily">Twice daily</option>
+                                    <option value="Three times daily">Three times daily</option>
+                                    <option value="Four times daily">Four times daily</option>
+                                    <option value="Every 6 hours">Every 6 hours</option>
+                                    <option value="Every 8 hours">Every 8 hours</option>
+                                    <option value="As needed">As needed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Duration</label>
+                                <input type="text" id="medicationDuration" placeholder="e.g., 7 days, 2 weeks" />
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Additional Notes</label>
+                                <input type="text" id="medicationNotes" placeholder="e.g., Take with food, Avoid alcohol" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== FORM ACTIONS ===== -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">💾 Register Patient</button>
+                        <button type="reset" class="btn btn-outline">🔄 Reset Form</button>
+                        <a href="index.html" class="btn btn-outline">← Cancel</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ===== TOAST NOTIFICATION =====
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+
+        function closeToast() {
+            document.getElementById('toast').classList.remove('show');
+        }
+
+        // ===== REGISTER PATIENT =====
+        function registerPatient(e) {
+            e.preventDefault();
+
+            // Get values
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const allergies = document.getElementById('allergies').value.trim();
+            const medications = document.getElementById('medications').value.trim();
+            const conditions = document.getElementById('conditions').value.trim();
+            const procedure = document.getElementById('procedure').value;
+            const doctor = document.getElementById('doctor').value;
+            const treatmentDesc = document.getElementById('treatmentDesc').value.trim();
+            const treatmentCost = document.getElementById('treatmentCost').value;
+            const reviewDate = document.getElementById('reviewDate').value;
+            const medicationName = document.getElementById('medicationName').value.trim();
+            const medicationDosage = document.getElementById('medicationDosage').value.trim();
+            const medicationFrequency = document.getElementById('medicationFrequency').value;
+            const medicationDuration = document.getElementById('medicationDuration').value.trim();
+            const medicationNotes = document.getElementById('medicationNotes').value.trim();
+
+            // Validate required fields
+            if (!firstName || !lastName || !age || !gender || !phone || !procedure || !doctor || !treatmentCost) {
+                showToast('❌ Error', 'Please fill in all required fields.');
+                return;
+            }
+
+            // Get existing patients
+            const patients = JSON.parse(localStorage.getItem('patients')) || [];
+
+            // Generate Patient ID
+            const patientId = 'BD-' + new Date().getFullYear() + '-' + String(patients.length + 1).padStart(4, '0');
+
+            // Create patient object
+            const patient = {
+                id: patientId,
+                firstName: firstName,
+                lastName: lastName,
+                age: age,
+                gender: gender,
+                phone: phone,
+                email: email || 'N/A',
+                address: address || 'N/A',
+                allergies: allergies || 'None',
+                medications: medications || 'None',
+                conditions: conditions || 'None',
+                procedure: procedure,
+                doctor: doctor,
+                treatmentDesc: treatmentDesc || 'Standard treatment',
+                treatmentCost: parseFloat(treatmentCost),
+                reviewDate: reviewDate || 'Not set',
+                status: 'pending',
+                registrationDate: new Date().toISOString().split('T')[0],
+                // Medication details
+                medication: {
+                    name: medicationName || 'None prescribed',
+                    dosage: medicationDosage || 'N/A',
+                    frequency: medicationFrequency || 'As directed',
+                    duration: medicationDuration || 'As needed',
+                    notes: medicationNotes || 'N/A'
+                }
+            };
+
+            // Save patient
+            patients.push(patient);
+            localStorage.setItem('patients', JSON.stringify(patients));
+
+            // Show success message with patient ID
+            showToast('✅ Patient Registered!', `Patient ${firstName} ${lastName} has been registered with ID: ${patientId}`);
+
+            // Print receipt
+            setTimeout(() => {
+                printReceipt(patient);
+            }, 1000);
+
+            // Reset form
+            document.getElementById('registrationForm').reset();
+
+            // Auto-set review date to 1 month from now if not set
+            if (!reviewDate) {
+                const date = new Date();
+                date.setMonth(date.getMonth() + 1);
+                document.getElementById('reviewDate').value = date.toISOString().split('T')[0];
+            }
+        }
+
+        // ===== PRINT RECEIPT =====
+        function printReceipt(patient) {
+            const receiptWindow = window.open('', '_blank', 'width=600,height=700');
+            receiptWindow.document.write(`
+                <html>
+                <head>
+                    <title>Receipt - ${patient.id}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 40px; max-width: 500px; margin: 0 auto; }
+                        .header { text-align: center; border-bottom: 3px solid #0a6bdf; padding-bottom: 20px; margin-bottom: 20px; }
+                        .header h1 { color: #0a6bdf; margin: 0; }
+                        .header p { color: #666; margin: 4px 0; }
+                        .receipt-id { text-align: center; font-size: 0.9rem; color: #666; margin-bottom: 20px; }
+                        .section { margin-bottom: 16px; }
+                        .section h3 { color: #0a1e2f; border-bottom: 1px solid #e0e0e0; padding-bottom: 6px; margin-bottom: 10px; }
+                        .row { display: flex; justify-content: space-between; padding: 4px 0; }
+                        .row .label { color: #666; }
+                        .row .value { font-weight: 500; color: #0a1e2f; }
+                        .total { border-top: 2px solid #0a1e2f; padding-top: 12px; margin-top: 12px; }
+                        .total .value { font-size: 1.2rem; font-weight: 800; color: #0a6bdf; }
+                        .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0; color: #666; font-size: 0.85rem; }
+                        .medication-box { background: #f0f8ff; padding: 12px; border-radius: 8px; margin-top: 8px; border-left: 4px solid #0a6bdf; }
+                        .medication-box .med-row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 0.9rem; }
+                        .medication-box .med-label { color: #666; }
+                        .medication-box .med-value { font-weight: 500; }
+                        @media print { body { padding: 20px; } .no-print { display: none; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>🦷 Bantu Dental Hub</h1>
+                        <p>Kasenyi, Entebbe, Uganda</p>
+                        <p>📞 +256 758 985317</p>
+                    </div>
+
+                    <div class="receipt-id">
+                        <strong>Receipt #:</strong> RCP-${patient.id.split('-')[1]}-${patient.id.split('-')[2]}<br>
+                        <strong>Date:</strong> ${new Date().toLocaleDateString()}
+                    </div>
+
+                    <div class="section">
+                        <h3>👤 Patient Information</h3>
+                        <div class="row"><span class="label">Patient ID:</span><span class="value">${patient.id}</span></div>
+                        <div class="row"><span class="label">Name:</span><span class="value">${patient.firstName} ${patient.lastName}</span></div>
+                        <div class="row"><span class="label">Age:</span><span class="value">${patient.age}</span></div>
+                        <div class="row"><span class="label">Gender:</span><span class="value">${patient.gender}</span></div>
+                        <div class="row"><span class="label">Phone:</span><span class="value">${patient.phone}</span></div>
+                    </div>
+
+                    <div class="section">
+                        <h3>🦷 Treatment Details</h3>
+                        <div class="row"><span class="label">Procedure:</span><span class="value">${patient.procedure}</span></div>
+                        <div class="row"><span class="label">Doctor:</span><span class="value">${patient.doctor}</span></div>
+                        <div class="row"><span class="label">Treatment:</span><span class="value">${patient.treatmentDesc}</span></div>
+                        <div class="row"><span class="label">Review Date:</span><span class="value">${patient.reviewDate}</span></div>
+                    </div>
+
+                    <div class="section">
+                        <h3>💊 Prescribed Medication</h3>
+                        <div class="medication-box">
+                            <div class="med-row"><span class="med-label">💊 Medication:</span><span class="med-value">${patient.medication.name}</span></div>
+                            <div class="med-row"><span class="med-label">📊 Dosage:</span><span class="med-value">${patient.medication.dosage}</span></div>
+                            <div class="med-row"><span class="med-label">🕐 Frequency:</span><span class="med-value">${patient.medication.frequency}</span></div>
+                            <div class="med-row"><span class="med-label">📅 Duration:</span><span class="med-value">${patient.medication.duration}</span></div>
+                            ${patient.medication.notes !== 'N/A' ? `<div class="med-row"><span class="med-label">📝 Notes:</span><span class="med-value">${patient.medication.notes}</span></div>` : ''}
+                        </div>
+                    </div>
+
+                    <div class="section total">
+                        <h3>💰 Payment Summary</h3>
+                        <div class="row"><span class="label">Treatment Cost:</span><span class="value">$${patient.treatmentCost.toFixed(2)}</span></div>
+                        <div class="row"><span class="label">Consultation Fee:</span><span class="value">$50.00</span></div>
+                        <div class="row" style="font-size:1.1rem; font-weight:700; border-top:2px solid #0a1e2f; padding-top:8px; margin-top:8px;">
+                            <span class="label">TOTAL:</span>
+                            <span class="value">$${(patient.treatmentCost + 50).toFixed(2)}</span>
+                        </div>
+                    </div>
+
+                    <div style="text-align:center; margin:20px 0; padding:12px; background:#f0fdf4; border-radius:8px; border:1px solid #22c55e;">
+                        <p style="color:#16a34a; font-weight:600; margin:0;">✅ Thank you for choosing Bantu Dental Hub!</p>
+                        <p style="color:#666; font-size:0.85rem; margin:4px 0 0;">Next Review: ${patient.reviewDate}</p>
+                    </div>
+
+                    <div class="footer">
+                        <p>📍 Kasenyi, Entebbe, Uganda</p>
+                        <p>📞 +256 758 985317 | ✉️ info@bantudentalhub.com</p>
+                        <p style="margin-top:8px; font-size:0.75rem; color:#999;">This is a computer-generated receipt. No signature required.</p>
+                        <button class="no-print" onclick="window.print()" style="margin-top:12px; padding:8px 24px; background:#0a6bdf; color:white; border:none; border-radius:8px; cursor:pointer; font-size:0.9rem;">🖨️ Print Receipt</button>
+                        <button class="no-print" onclick="window.close()" style="margin-top:12px; padding:8px 24px; background:#ef4444; color:white; border:none; border-radius:8px; cursor:pointer; font-size:0.9rem; margin-left:8px;">✕ Close</button>
+                    </div>
+
+                    <script>
+                        // Auto-print
+                        setTimeout(function() {
+                            window.print();
+                        }, 500);
+                    <\/script>
+                </body>
+                </html>
+            `);
+            receiptWindow.document.close();
+        }
+
+        // ===== SET DEFAULT REVIEW DATE =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const date = new Date();
+            date.setMonth(date.getMonth() + 1);
+            document.getElementById('reviewDate').value = date.toISOString().split('T')[0];
+        });
+    </script>
+
+</body>
+</html>
