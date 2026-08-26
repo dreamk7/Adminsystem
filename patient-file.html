@@ -6,7 +6,6 @@
     <title>Bantu Dental Hub | Patient Files</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        /* ===== SAME STYLES AS INDEX.HTML ===== */
         * {
             margin: 0;
             padding: 0;
@@ -47,7 +46,6 @@
             width: 100%;
         }
 
-        /* ===== HEADER ===== */
         .header {
             background: var(--white);
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
@@ -59,6 +57,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: var(--shadow);
         }
 
         .header .logo {
@@ -87,7 +86,6 @@
             color: var(--primary);
         }
 
-        /* ===== PATIENT FILE ===== */
         .page-header {
             margin: 24px 0;
         }
@@ -167,6 +165,14 @@
             font-weight: 700;
         }
 
+        .badge {
+            padding: 4px 12px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -234,7 +240,6 @@
             margin-bottom: 12px;
         }
 
-        /* ===== PATIENT DETAIL MODAL ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -323,7 +328,13 @@
             color: var(--dark);
         }
 
-        /* ===== RESPONSIVE ===== */
+        .modal .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
         @media (max-width: 768px) {
             .search-box { flex-direction: column; }
             .search-box input, .search-box select { min-width: 100%; }
@@ -332,6 +343,118 @@
             .modal { padding: 20px; }
             .modal .detail-row { flex-direction: column; }
             .modal .detail-row .label { width: 100%; }
+            .modal .modal-actions { flex-direction: column; }
+            .modal .modal-actions .btn { width: 100%; text-align: center; }
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2.5px;
+            background: var(--dark);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+        .sidebar {
+            position: fixed;
+            top: 72px;
+            left: 0;
+            bottom: 0;
+            width: 240px;
+            background: var(--white);
+            border-right: 1px solid rgba(0, 0, 0, 0.04);
+            padding: 20px 0;
+            overflow-y: auto;
+            z-index: 999;
+            transition: var(--transition);
+            transform: translateX(-100%);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar .nav-item:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .sidebar .nav-item.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .sidebar .nav-item .icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar .nav-divider {
+            height: 1px;
+            background: var(--light-gray);
+            margin: 12px 24px;
+        }
+
+        .sidebar .nav-label {
+            padding: 8px 24px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding: 16px;
+            min-height: calc(100vh - 72px);
+        }
+
+        @media (min-width: 769px) {
+            .sidebar {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 240px;
+                padding: 24px;
+            }
+            .hamburger {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
         }
     </style>
 </head>
@@ -339,14 +462,44 @@
 
     <!-- ===== HEADER ===== -->
     <header class="header">
-        <a href="index.html" class="logo">
-            <span class="brand"><span class="bantu">🦷 Bantu</span><span class="dental">Dental hub</span></span>
-        </a>
-        <a href="index.html" class="back-btn">← Back to Dashboard</a>
+        <div style="display:flex; align-items:center; gap:16px;">
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <a href="homepage.html" class="logo">
+                <span class="brand"><span class="bantu">🦷 Bantu</span><span class="dental">Dental hub</span></span>
+            </a>
+        </div>
+        <a href="homepage.html" class="back-btn">← Back to Dashboard</a>
     </header>
 
+    <!-- ===== SIDEBAR ===== -->
+    <nav class="sidebar" id="sidebar">
+        <div class="nav-label">Main Menu</div>
+        <a href="homepage.html" class="nav-item">
+            <span class="icon">📊</span> Dashboard
+        </a>
+        <a href="register.html" class="nav-item">
+            <span class="icon">📋</span> Register Patient
+        </a>
+        <a href="patient-file.html" class="nav-item active">
+            <span class="icon">📁</span> Patient File
+        </a>
+        <a href="tracking.html" class="nav-item">
+            <span class="icon">📈</span> Patient Tracking
+        </a>
+        <div class="nav-divider"></div>
+        <div class="nav-label">Management</div>
+        <a href="#" class="nav-item" onclick="alert('Go to homepage to book appointments')">
+            <span class="icon">📅</span> Appointments
+        </a>
+        <a href="#" class="nav-item" onclick="alert('Go to homepage to record payments')">
+            <span class="icon">💰</span> Payments
+        </a>
+    </nav>
+
     <!-- ===== MAIN CONTENT ===== -->
-    <main>
+    <main class="main-content">
         <div class="container">
             <div class="page-header">
                 <h1>📁 Patient <span class="highlight">Files</span></h1>
@@ -370,7 +523,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3>📋 All Patients</h3>
-                    <span id="patientCount" class="badge" style="padding:4px 12px; background:var(--primary-light); color:var(--primary); border-radius:20px; font-weight:600;">0 patients</span>
+                    <span class="badge" id="patientCount">0 patients</span>
                 </div>
                 <div id="patientList">
                     <div class="no-data">
@@ -388,7 +541,7 @@
             <button class="close-btn" onclick="closeModal()">✕</button>
             <h2 id="modalTitle">Patient Details</h2>
             <div id="modalContent"></div>
-            <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+            <div class="modal-actions">
                 <button class="btn btn-primary" onclick="printPatientFile()">🖨️ Print File</button>
                 <button class="btn btn-success" onclick="updateStatus()">✅ Update Status</button>
                 <button class="btn btn-danger" onclick="deletePatient()">🗑️ Delete Patient</button>
@@ -400,9 +553,24 @@
     <script>
         let currentPatientId = null;
 
+        // ===== CHECK LOGIN =====
+        function checkLogin() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (isLoggedIn !== 'true') {
+                window.location.href = 'index.html';
+                return false;
+            }
+            return true;
+        }
+
         // ===== GET PATIENTS =====
         function getPatients() {
             return JSON.parse(localStorage.getItem('patients')) || [];
+        }
+
+        // ===== SAVE PATIENTS =====
+        function savePatients(patients) {
+            localStorage.setItem('patients', JSON.stringify(patients));
         }
 
         // ===== DISPLAY PATIENTS =====
@@ -414,7 +582,7 @@
                 container.innerHTML = `
                     <div class="no-data">
                         <span class="icon">👥</span>
-                        <p>No patients found.</p>
+                        <p>No patients found. <a href="register.html" style="color:var(--primary);">Register a patient</a></p>
                     </div>
                 `;
                 count.textContent = '0 patients';
@@ -564,7 +732,7 @@
 
             savePatients(patients);
             closeModal();
-            displayPatients(patients);
+            displayPatients(getPatients());
             alert(`✅ Status updated to: ${patient.status}`);
         }
 
@@ -577,7 +745,7 @@
             patients = patients.filter(p => p.id !== currentPatientId);
             savePatients(patients);
             closeModal();
-            displayPatients(patients);
+            displayPatients(getPatients());
             alert('🗑️ Patient deleted successfully.');
         }
 
@@ -681,12 +849,15 @@
             currentPatientId = null;
         }
 
-        function savePatients(patients) {
-            localStorage.setItem('patients', JSON.stringify(patients));
-        }
+        // ===== SIDEBAR TOGGLE =====
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('open');
+            this.classList.toggle('active');
+        });
 
         // ===== INITIALIZE =====
         document.addEventListener('DOMContentLoaded', function() {
+            if (!checkLogin()) return;
             displayPatients(getPatients());
         });
     </script>
