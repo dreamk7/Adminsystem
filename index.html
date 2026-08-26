@@ -43,8 +43,8 @@
             margin: 0;
         }
 
-        /* ===== FULL-SCREEN BACKGROUND VIDEO ===== */
-        .video-background {
+        /* ===== FULL-SCREEN BACKGROUND IMAGE ===== */
+        .bg-image {
             position: fixed;
             top: 0;
             left: 0;
@@ -52,21 +52,17 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
+            background: linear-gradient(135deg, #0a1e2f, #0a6bdf);
         }
 
-        .video-background video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
+        .bg-image img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            display: block;
         }
 
-        .video-background .overlay {
+        .bg-image .overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -395,36 +391,6 @@
             animation: shake 0.5s ease-in-out;
         }
 
-        /* ===== LOADING OVERLAY FOR VIDEO ===== */
-        .video-loading {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(10, 30, 47, 0.9), rgba(10, 107, 223, 0.7));
-            z-index: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 0.9rem;
-        }
-
-        .video-loading .loader {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            border-top-color: var(--white);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 12px;
-        }
-
-        .video-loading.hidden {
-            display: none;
-        }
-
         /* ===== SCROLLBAR STYLING ===== */
         ::-webkit-scrollbar {
             width: 4px;
@@ -442,19 +408,9 @@
 </head>
 <body>
 
-    <!-- ===== FULL-SCREEN BACKGROUND VIDEO (OCEAN WAVES) ===== -->
-    <div class="video-background">
-        <div class="video-loading" id="videoLoading">
-            <div class="loader"></div>
-            <span>Loading video...</span>
-        </div>
-        <video autoplay muted loop playsinline id="bgVideo">
-            <!-- Ocean Waves Videos from CDN -->
-            <source src="https://cdn.pixabay.com/video/2019/06/05/23673-335350086_large.mp4" type="video/mp4" />
-            <source src="https://cdn.pixabay.com/video/2020/07/28/45851-443782097_large.mp4" type="video/mp4" />
-            <source src="https://cdn.pixabay.com/video/2016/09/18/5339-180944216_large.mp4" type="video/mp4" />
-            <source src="https://cdn.pixabay.com/video/2021/08/01/83711-583665472_large.mp4" type="video/mp4" />
-        </video>
+    <!-- ===== FULL-SCREEN BACKGROUND IMAGE ===== -->
+    <div class="bg-image">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop" alt="Ocean Waves" loading="eager" />
         <div class="overlay"></div>
     </div>
 
@@ -619,27 +575,11 @@
                 document.getElementById('rememberMe').checked = true;
                 document.getElementById('password').focus();
             }
-
-            const video = document.getElementById('bgVideo');
-            const loading = document.getElementById('videoLoading');
-
-            video.addEventListener('canplay', function() {
-                loading.classList.add('hidden');
-            });
-
-            setTimeout(function() {
-                loading.classList.add('hidden');
-            }, 5000);
-
-            video.addEventListener('error', function() {
-                loading.classList.add('hidden');
-                console.log('⚠️ Background video failed to load. Using fallback.');
-            });
         });
 
         console.log('🔐 Bantu Dental Hub Login System loaded.');
         console.log('👤 Default credentials: admin / admin123');
-        console.log('🌊 Background video: Ocean Waves');
+        console.log('🌊 Background: Ocean photo (loads instantly)');
         console.log('✨ Transparent login card with blur effect!');
     </script>
 
