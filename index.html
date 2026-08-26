@@ -72,6 +72,98 @@
             z-index: 1;
         }
 
+        /* ===== WELCOME SCREEN ===== */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a1e2f, #0a6bdf);
+            animation: welcomeFadeOut 3.5s ease-in-out forwards;
+        }
+
+        .welcome-screen .welcome-content {
+            text-align: center;
+            color: var(--white);
+            animation: welcomePulse 2s ease-in-out infinite;
+        }
+
+        .welcome-screen .welcome-content .icon {
+            font-size: 5rem;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .welcome-screen .welcome-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .welcome-screen .welcome-content h1 .highlight {
+            color: #6ab0ff;
+        }
+
+        .welcome-screen .welcome-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 8px;
+        }
+
+        .welcome-screen .welcome-content .loader-bar {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            margin: 20px auto 0;
+            overflow: hidden;
+        }
+
+        .welcome-screen .welcome-content .loader-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            border-radius: 10px;
+            animation: loadBar 2.5s ease-in-out forwards;
+        }
+
+        @keyframes welcomePulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        @keyframes welcomeFadeOut {
+            0% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+                z-index: -1;
+            }
+        }
+
+        @keyframes loadBar {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
         /* ===== LOGIN CONTAINER ===== */
         .login-container {
             position: relative;
@@ -79,7 +171,7 @@
             width: 100%;
             max-width: 400px;
             padding: 20px;
-            animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s both;
         }
 
         @keyframes slideUp {
@@ -364,6 +456,18 @@
             .login-container {
                 padding: 12px;
             }
+
+            .welcome-screen .welcome-content h1 {
+                font-size: 2rem;
+            }
+
+            .welcome-screen .welcome-content .icon {
+                font-size: 3.5rem;
+            }
+
+            .welcome-screen .welcome-content p {
+                font-size: 1rem;
+            }
         }
 
         /* ===== SHAKE ANIMATION ===== */
@@ -407,6 +511,18 @@
     </style>
 </head>
 <body>
+
+    <!-- ===== WELCOME SCREEN ===== -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <span class="icon">🦷</span>
+            <h1><span class="highlight">Bantu</span>Dental hub</h1>
+            <p>Clinic Management System</p>
+            <div class="loader-bar">
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== FULL-SCREEN BACKGROUND IMAGE ===== -->
     <div class="bg-image">
@@ -575,12 +691,18 @@
                 document.getElementById('rememberMe').checked = true;
                 document.getElementById('password').focus();
             }
+
+            // Remove welcome screen after animation completes
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+            }, 4000);
         });
 
         console.log('🔐 Bantu Dental Hub Login System loaded.');
         console.log('👤 Default credentials: admin / admin123');
-        console.log('🌊 Background: Ocean photo (loads instantly)');
-        console.log('✨ Transparent login card with blur effect!');
+        console.log('🌊 Background: Ocean photo');
+        console.log('✨ Welcome screen appears first, then login!');
     </script>
 
 </body>
