@@ -6,7 +6,7 @@
     <title>Bantu Dental Hub | Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        /* ===== SAME DASHBOARD STYLES AS BEFORE ===== */
+        /* ===== ALL STYLES SAME AS BEFORE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -131,6 +131,11 @@
             overflow-y: auto;
             z-index: 999;
             transition: var(--transition);
+            transform: translateX(-100%);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
         }
 
         .sidebar .nav-item {
@@ -187,10 +192,50 @@
         }
 
         .main-content {
-            margin-left: 240px;
-            padding: 24px;
+            margin-left: 0;
+            padding: 16px;
             min-height: calc(100vh - 72px);
         }
+
+        @media (min-width: 769px) {
+            .sidebar {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 240px;
+                padding: 24px;
+            }
+            .hamburger {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2.5px;
+            background: var(--dark);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
 
         .welcome-banner {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -330,12 +375,9 @@
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
+            background: var(--primary-light);
+            color: var(--primary);
         }
-
-        .badge-success { background: #dcfce7; color: var(--success); }
-        .badge-warning { background: #fef3c7; color: var(--warning); }
-        .badge-danger { background: #fee2e2; color: var(--danger); }
-        .badge-primary { background: var(--primary-light); color: var(--primary); }
 
         table {
             width: 100%;
@@ -403,29 +445,6 @@
             display: block;
             margin-bottom: 12px;
         }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            padding: 6px;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 26px;
-            height: 2.5px;
-            background: var(--dark);
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
 
         .modal-overlay {
             display: none;
@@ -508,10 +527,6 @@
         }
 
         @media (max-width: 768px) {
-            .hamburger { display: flex; }
-            .sidebar { transform: translateX(-100%); width: 280px; }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 16px; }
             .stats-grid { grid-template-columns: 1fr; }
             .quick-actions { grid-template-columns: 1fr; }
             table { font-size: 0.8rem; }
@@ -522,6 +537,24 @@
 
         @media (max-width: 480px) {
             .header .user-info .welcome { display: none; }
+        }
+
+        /* ===== REFRESH BUTTON ===== */
+        .refresh-btn {
+            background: var(--white);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+
+        .refresh-btn:hover {
+            background: var(--primary);
+            color: var(--white);
         }
     </style>
 </head>
@@ -584,7 +617,10 @@
                 <h2>🏥 Welcome Back, <span id="welcomeName">Admin</span>!</h2>
                 <p>Here's your clinic overview for today.</p>
             </div>
-            <div class="date-display" id="dateDisplay"></div>
+            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                <div class="date-display" id="dateDisplay"></div>
+                <button class="refresh-btn" onclick="updateDashboard()">🔄 Refresh</button>
+            </div>
         </div>
 
         <div class="stats-grid">
@@ -649,6 +685,403 @@
         <div class="card">
             <div class="card-header">
                 <h3>📅 Today's Appointments</h3>
-                <span class="badge badge-primary" id="appointmentCount">0 appointments</span>
+                <span class="badge" id="appointmentCount">0 appointments</span>
             </div>
-            <div id="todayAppointmentsL
+            <div id="todayAppointmentsList">
+                <div class="no-data">
+                    <span class="icon">📅</span>
+                    <p>No appointments scheduled for today.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>⚠️ Reviews Due</h3>
+                <span class="badge" id="reviewCount">0 reviews due</span>
+            </div>
+            <div id="reviewsDue">
+                <div class="no-data">
+                    <span class="icon">✅</span>
+                    <p>No reviews due today. All patients are on track!</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ===== APPOINTMENT MODAL ===== -->
+    <div class="modal-overlay" id="appointmentModal">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal('appointmentModal')">✕</button>
+            <h2>📅 Book Appointment</h2>
+            <p style="color:var(--gray); margin-bottom:16px;">Schedule a new appointment for a patient.</p>
+            <form id="appointmentForm" onsubmit="bookAppointment(event)">
+                <div class="form-group">
+                    <label for="appPatient">Patient</label>
+                    <select id="appPatient" required>
+                        <option value="">Select a patient...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appDate">Date</label>
+                    <input type="date" id="appDate" required />
+                </div>
+                <div class="form-group">
+                    <label for="appTime">Time</label>
+                    <select id="appTime" required>
+                        <option value="">Select time...</option>
+                        <option value="8:00 AM">8:00 AM</option>
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="1:00 PM">1:00 PM</option>
+                        <option value="2:00 PM">2:00 PM</option>
+                        <option value="3:00 PM">3:00 PM</option>
+                        <option value="4:00 PM">4:00 PM</option>
+                        <option value="5:00 PM">5:00 PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appDoctor">Doctor</label>
+                    <select id="appDoctor" required>
+                        <option value="">Select doctor...</option>
+                        <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+                        <option value="Dr. Michael Chen">Dr. Michael Chen</option>
+                        <option value="Dr. Emily Rodriguez">Dr. Emily Rodriguez</option>
+                        <option value="Dr. James Wilson">Dr. James Wilson</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">📅 Book Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== PAYMENT MODAL ===== -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal('paymentModal')">✕</button>
+            <h2>💰 Record Payment</h2>
+            <p style="color:var(--gray); margin-bottom:16px;">Record a payment received from a patient.</p>
+            <form id="paymentForm" onsubmit="recordPayment(event)">
+                <div class="form-group">
+                    <label for="payPatient">Patient</label>
+                    <select id="payPatient" required>
+                        <option value="">Select a patient...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="payAmount">Amount ($)</label>
+                    <input type="number" id="payAmount" placeholder="0.00" required />
+                </div>
+                <div class="form-group">
+                    <label for="payMethod">Payment Method</label>
+                    <select id="payMethod" required>
+                        <option value="">Select method...</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Debit Card">Debit Card</option>
+                        <option value="Mobile Money">Mobile Money</option>
+                        <option value="Insurance">Insurance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="payTreatment">Treatment</label>
+                    <input type="text" id="payTreatment" placeholder="Treatment description" />
+                </div>
+                <button type="submit" class="btn btn-success" style="width:100%;">💰 Record Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ===== CHECK LOGIN =====
+        function checkLogin() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (isLoggedIn !== 'true') {
+                window.location.href = 'index.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('rememberMe');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function getPatients() {
+            return JSON.parse(localStorage.getItem('patients')) || [];
+        }
+
+        function getAppointments() {
+            return JSON.parse(localStorage.getItem('appointments')) || [];
+        }
+
+        function getPayments() {
+            return JSON.parse(localStorage.getItem('payments')) || [];
+        }
+
+        function savePatients(patients) {
+            localStorage.setItem('patients', JSON.stringify(patients));
+        }
+
+        function saveAppointments(appointments) {
+            localStorage.setItem('appointments', JSON.stringify(appointments));
+        }
+
+        function savePayments(payments) {
+            localStorage.setItem('payments', JSON.stringify(payments));
+        }
+
+        // ===== UPDATE DASHBOARD =====
+        function updateDashboard() {
+            const patients = getPatients();
+            const appointments = getAppointments();
+            const payments = getPayments();
+
+            console.log('🔄 Dashboard Refreshed!');
+            console.log('👥 Total Patients:', patients.length);
+            console.log('📅 Total Appointments:', appointments.length);
+            console.log('💰 Total Payments:', payments.length);
+
+            // Total Patients
+            document.getElementById('totalPatients').textContent = patients.length;
+
+            // Today's Appointments
+            const today = new Date().toISOString().split('T')[0];
+            const todayApps = appointments.filter(a => a.date === today);
+            document.getElementById('todayAppointments').textContent = todayApps.length;
+            document.getElementById('appointmentCount').textContent = todayApps.length + ' appointments';
+            document.getElementById('appBadge').textContent = todayApps.length;
+
+            // Monthly Revenue
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            const monthlyPayments = payments.filter(p => {
+                const d = new Date(p.date);
+                return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+            });
+            const totalRevenue = monthlyPayments.reduce((sum, p) => sum + parseFloat(p.amount), 0);
+            document.getElementById('monthlyRevenue').textContent = '$' + totalRevenue.toFixed(2);
+
+            // Pending Treatments
+            const pending = patients.filter(p => p.status === 'pending' || p.status === 'scheduled');
+            document.getElementById('pendingTreatments').textContent = pending.length;
+
+            // Recent Patients (last 5)
+            const recentPatients = patients.slice(-5).reverse();
+            const recentContainer = document.getElementById('recentPatients');
+            if (recentPatients.length === 0) {
+                recentContainer.innerHTML = `
+                    <div class="no-data">
+                        <span class="icon">👥</span>
+                        <p>No patients registered yet. <a href="register.html" style="color:var(--primary);">Register your first patient</a></p>
+                    </div>
+                `;
+            } else {
+                let html = `<div style="overflow-x:auto;"><table><thead><tr>
+                    <th>Patient ID</th><th>Name</th><th>Treatment</th><th>Doctor</th><th>Status</th><th>Review Date</th>
+                </tr></thead><tbody>`;
+                recentPatients.forEach(p => {
+                    const statusClass = p.status === 'completed' ? 'status-completed' : 
+                                      p.status === 'scheduled' ? 'status-scheduled' : 'status-pending';
+                    html += `<tr>
+                        <td><strong>${p.id}</strong></td>
+                        <td>${p.firstName} ${p.lastName}</td>
+                        <td>${p.procedure}</td>
+                        <td>${p.doctor}</td>
+                        <td><span class="status-badge ${statusClass}">${p.status || 'Pending'}</span></td>
+                        <td>${p.reviewDate || 'Not set'}</td>
+                    </tr>`;
+                });
+                html += '</tbody></table></div>';
+                recentContainer.innerHTML = html;
+            }
+
+            // Today's Appointments List
+            const appContainer = document.getElementById('todayAppointmentsList');
+            if (todayApps.length === 0) {
+                appContainer.innerHTML = `<div class="no-data"><span class="icon">📅</span><p>No appointments scheduled for today.</p></div>`;
+            } else {
+                let html = `<div style="overflow-x:auto;"><table><thead><tr>
+                    <th>Patient</th><th>Time</th><th>Doctor</th><th>Status</th>
+                </tr></thead><tbody>`;
+                todayApps.forEach(a => {
+                    const patient = patients.find(p => p.id === a.patientId);
+                    html += `<tr>
+                        <td>${patient ? patient.firstName + ' ' + patient.lastName : 'Unknown'}</td>
+                        <td>${a.time}</td>
+                        <td>${a.doctor}</td>
+                        <td><span class="status-badge status-scheduled">Scheduled</span></td>
+                    </tr>`;
+                });
+                html += '</tbody></table></div>';
+                appContainer.innerHTML = html;
+            }
+
+            // Reviews Due
+            const todayDate = new Date();
+            const reviewsDue = patients.filter(p => {
+                if (!p.reviewDate || p.reviewDate === 'Not set') return false;
+                const reviewDate = new Date(p.reviewDate);
+                const diffTime = reviewDate - todayDate;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                return diffDays <= 7 && diffDays >= 0;
+            });
+            document.getElementById('reviewCount').textContent = reviewsDue.length + ' reviews due';
+            const reviewContainer = document.getElementById('reviewsDue');
+            if (reviewsDue.length === 0) {
+                reviewContainer.innerHTML = `<div class="no-data"><span class="icon">✅</span><p>No reviews due today. All patients are on track!</p></div>`;
+            } else {
+                let html = `<div style="overflow-x:auto;"><table><thead><tr>
+                    <th>Patient</th><th>Treatment</th><th>Review Date</th><th>Doctor</th><th>Action</th>
+                </tr></thead><tbody>`;
+                reviewsDue.forEach(p => {
+                    html += `<tr>
+                        <td>${p.firstName} ${p.lastName}</td>
+                        <td>${p.procedure}</td>
+                        <td><strong>${p.reviewDate}</strong></td>
+                        <td>${p.doctor}</td>
+                        <td><button class="btn btn-primary" style="padding:4px 12px; font-size:0.8rem;" onclick="alert('Reminder sent to ${p.firstName} ${p.lastName}')">📧 Remind</button></td>
+                    </tr>`;
+                });
+                html += '</tbody></table></div>';
+                reviewContainer.innerHTML = html;
+            }
+        }
+
+        function showAppointmentModal() {
+            const modal = document.getElementById('appointmentModal');
+            const select = document.getElementById('appPatient');
+            const patients = getPatients();
+            select.innerHTML = '<option value="">Select a patient...</option>';
+            patients.forEach(p => {
+                select.innerHTML += `<option value="${p.id}">${p.firstName} ${p.lastName} (${p.id})</option>`;
+            });
+            document.getElementById('appDate').value = new Date().toISOString().split('T')[0];
+            modal.classList.add('active');
+        }
+
+        function bookAppointment(e) {
+            e.preventDefault();
+            const patientId = document.getElementById('appPatient').value;
+            const date = document.getElementById('appDate').value;
+            const time = document.getElementById('appTime').value;
+            const doctor = document.getElementById('appDoctor').value;
+
+            if (!patientId || !date || !time || !doctor) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const appointments = getAppointments();
+            appointments.push({
+                id: 'APT-' + String(appointments.length + 1).padStart(4, '0'),
+                patientId: patientId,
+                date: date,
+                time: time,
+                doctor: doctor,
+                createdAt: new Date().toISOString()
+            });
+            saveAppointments(appointments);
+            closeModal('appointmentModal');
+            alert('✅ Appointment booked successfully!');
+            updateDashboard();
+        }
+
+        function showPaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            const select = document.getElementById('payPatient');
+            const patients = getPatients();
+            select.innerHTML = '<option value="">Select a patient...</option>';
+            patients.forEach(p => {
+                select.innerHTML += `<option value="${p.id}">${p.firstName} ${p.lastName} (${p.id})</option>`;
+            });
+            modal.classList.add('active');
+        }
+
+        function recordPayment(e) {
+            e.preventDefault();
+            const patientId = document.getElementById('payPatient').value;
+            const amount = document.getElementById('payAmount').value;
+            const method = document.getElementById('payMethod').value;
+            const treatment = document.getElementById('payTreatment').value;
+
+            if (!patientId || !amount || !method) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const payments = getPayments();
+            payments.push({
+                id: 'PAY-' + String(payments.length + 1).padStart(4, '0'),
+                patientId: patientId,
+                amount: parseFloat(amount),
+                method: method,
+                treatment: treatment || 'General treatment',
+                date: new Date().toISOString().split('T')[0]
+            });
+            savePayments(payments);
+            closeModal('paymentModal');
+            alert('✅ Payment recorded successfully!');
+            updateDashboard();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function showReports() {
+            alert('📊 Reports feature coming soon!');
+        }
+
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('open');
+            this.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('dateDisplay').textContent = '📅 ' + now.toLocaleDateString('en-US', options);
+        }
+
+        function getUsername() {
+            const savedUsername = localStorage.getItem('savedUsername');
+            if (savedUsername) {
+                const name = savedUsername.charAt(0).toUpperCase() + savedUsername.slice(1);
+                document.getElementById('userDisplay').textContent = name;
+                document.getElementById('welcomeName').textContent = name;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkLogin()) return;
+            updateDate();
+            getUsername();
+            updateDashboard();
+            document.getElementById('appDate').value = new Date().toISOString().split('T')[0];
+
+            // Auto-refresh every 30 seconds
+            setInterval(updateDashboard, 30000);
+        });
+
+        console.log('🦷 Bantu Dental Hub Dashboard loaded!');
+        console.log('💡 Click "Refresh" button or wait 30 seconds for auto-refresh.');
+    </script>
+
+</body>
+</html>
