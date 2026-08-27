@@ -162,16 +162,16 @@
             box-shadow: var(--shadow);
             text-align: center;
             width: 100%;
-            min-height: 250px;
+            min-height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .tooth-section .tooth-wrapper img {
-            max-width: 70%;
+            max-width: 80%;
             height: auto;
-            max-height: 220px;
+            max-height: 280px;
             animation: spin3D 10s linear infinite;
             filter: drop-shadow(0 10px 30px rgba(10, 107, 223, 0.15));
         }
@@ -197,6 +197,7 @@
             text-align: center;
             border-top: 3px solid var(--primary);
             opacity: 0;
+            transform: translateX(0);
         }
 
         .stat-card:nth-child(1) {
@@ -213,12 +214,12 @@
         }
 
         @keyframes dissolveFromLeft {
-            0% { opacity: 0; transform: translateX(-60px); }
+            0% { opacity: 0; transform: translateX(-80px); }
             100% { opacity: 1; transform: translateX(0); }
         }
 
         @keyframes dissolveFromRight {
-            0% { opacity: 0; transform: translateX(60px); }
+            0% { opacity: 0; transform: translateX(80px); }
             100% { opacity: 1; transform: translateX(0); }
         }
 
@@ -265,23 +266,17 @@
             border: 2px solid transparent;
             cursor: pointer;
             opacity: 0;
+            transform: translateY(30px);
+            animation: dissolveUp 0.6s ease forwards;
         }
 
-        .quick-action:nth-child(1) {
-            animation: dissolveOut 0.8s ease forwards;
-        }
-        .quick-action:nth-child(2) {
-            animation: dissolveOut 0.8s ease 0.3s forwards;
-        }
-        .quick-action:nth-child(3) {
-            animation: dissolveOut 0.8s ease 0.6s forwards;
-        }
-        .quick-action:nth-child(4) {
-            animation: dissolveOut 0.8s ease 0.9s forwards;
-        }
+        .quick-action:nth-child(1) { animation-delay: 0.1s; }
+        .quick-action:nth-child(2) { animation-delay: 0.3s; }
+        .quick-action:nth-child(3) { animation-delay: 0.5s; }
+        .quick-action:nth-child(4) { animation-delay: 0.7s; }
 
-        @keyframes dissolveOut {
-            0% { opacity: 0; transform: translateY(-30px); }
+        @keyframes dissolveUp {
+            0% { opacity: 0; transform: translateY(30px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
@@ -301,24 +296,19 @@
             width: 100%;
         }
 
-        .two-col .card {
-            opacity: 0;
-        }
-
-        .two-col .card:nth-child(1) {
-            animation: dissolveFromLeft 0.8s ease 0.5s forwards;
-        }
-        .two-col .card:nth-child(2) {
-            animation: dissolveFromRight 0.8s ease 0.7s forwards;
-        }
-
         /* ===== CARDS ===== */
         .card {
             background: var(--white);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             padding: 14px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: dissolveUp 0.6s ease forwards;
         }
+
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
 
         .card-header {
             display: flex;
@@ -440,7 +430,6 @@
             .left-sidebar .logo .brand .dental { color: #6ab0ff; }
 
             .left-sidebar .nav-item {
-                position: relative;
                 display: flex;
                 align-items: center;
                 gap: 12px;
@@ -560,7 +549,7 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 30px;
+                gap: 20px;
             }
 
             .greeting-tooth-container .greeting-text {
@@ -592,24 +581,22 @@
                 animation: fadeIn 1s ease 1.5s forwards;
             }
 
-            /* 3D Tooth in Middle - ENLARGED */
+            /* Larger 3D Tooth in Middle */
             .greeting-tooth-container .tooth-wrapper {
                 opacity: 0;
                 animation: fadeIn 1s ease 1.2s forwards;
                 width: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 20px 0;
+                max-width: 400px;
+                margin: 0 auto;
             }
 
             .greeting-tooth-container .tooth-wrapper img {
-                width: 350px;
-                height: 350px;
+                width: 100%;
+                height: auto;
+                max-height: 350px;
                 object-fit: contain;
                 animation: spin3D 10s linear infinite;
                 filter: drop-shadow(0 10px 30px rgba(10, 107, 223, 0.15));
-                transition: all 0.5s ease;
             }
 
             @keyframes spin3D {
@@ -631,16 +618,19 @@
                 opacity: 0.08;
                 pointer-events: none;
                 transition: all 0.5s ease;
-                scale: 0.9;
+                scale: 0.8;
             }
 
             .middle-content.has-content .greeting-tooth-container .greeting-text {
                 font-size: 2.5rem;
             }
 
+            .middle-content.has-content .greeting-tooth-container .tooth-wrapper {
+                max-width: 300px;
+            }
+
             .middle-content.has-content .greeting-tooth-container .tooth-wrapper img {
-                width: 200px;
-                height: 200px;
+                max-height: 250px;
             }
 
             .middle-content.has-content {
@@ -954,8 +944,8 @@
             .quick-actions { grid-template-columns: repeat(2, 1fr); }
             .two-col { grid-template-columns: 1fr; }
             .greeting-section .greeting-text { font-size: 1.2rem; }
-            .tooth-section { min-height: 200px; }
-            .tooth-section .tooth-wrapper img { max-height: 160px; }
+            .tooth-section { min-height: 250px; }
+            .tooth-section .tooth-wrapper img { max-height: 200px; }
             .stat-card .stat-number { font-size: 1.2rem; }
         }
 
@@ -963,7 +953,7 @@
             .stats-grid { grid-template-columns: 1fr; }
             .quick-actions { grid-template-columns: 1fr; }
             .greeting-section .greeting-text { font-size: 1rem; }
-            .tooth-section .tooth-wrapper img { max-height: 130px; }
+            .tooth-section .tooth-wrapper img { max-height: 160px; }
         }
 
         /* ============================================================
@@ -1080,22 +1070,22 @@
                 </div>
             </div>
 
-            <!-- QUICK ACTIONS -->
+            <!-- QUICK ACTIONS - MOBILE NAVIGATION TO PAGES -->
             <div class="section-block">
                 <div class="quick-actions">
-                    <a href="#" class="quick-action" onclick="handleMobileAction('register')">
+                    <a href="register.html" class="quick-action">
                         <span class="icon">📋</span>
                         <span class="label">Register Patient</span>
                     </a>
-                    <a href="#" class="quick-action" onclick="handleMobileAction('book')">
+                    <a href="appointments.html" class="quick-action">
                         <span class="icon">📅</span>
                         <span class="label">Book Appointment</span>
                     </a>
-                    <a href="#" class="quick-action" onclick="handleMobileAction('payment')">
+                    <a href="payments.html" class="quick-action">
                         <span class="icon">💰</span>
                         <span class="label">Record Payment</span>
                     </a>
-                    <a href="#" class="quick-action" onclick="handleMobileAction('tracking')">
+                    <a href="tracking.html" class="quick-action">
                         <span class="icon">📈</span>
                         <span class="label">Patient Tracking</span>
                     </a>
@@ -1108,7 +1098,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3>📋 Recent Patients</h3>
-                            <a href="#" class="btn btn-primary" onclick="handleMobileAction('files')">View All</a>
+                            <a href="patient-files.html" class="btn btn-primary">View All</a>
                         </div>
                         <div id="mobileRecentPatients">
                             <div class="no-data">
@@ -1134,7 +1124,7 @@
 
             <!-- APPOINTMENTS -->
             <div class="section-block">
-                <div class="card">
+                <div class="card" style="animation-delay: 0.6s;">
                     <div class="card-header">
                         <h3>📅 Today's Appointments</h3>
                         <span class="badge" id="mobileAppointmentCount">0 appointments</span>
@@ -1150,7 +1140,7 @@
 
             <!-- REVIEWS -->
             <div class="section-block">
-                <div class="card">
+                <div class="card" style="animation-delay: 0.8s;">
                     <div class="card-header">
                         <h3>⚠️ Reviews Due</h3>
                         <span class="badge" id="mobileReviewCount">0 reviews due</span>
@@ -1441,21 +1431,7 @@
         }
 
         // ============================================================
-        // MOBILE ACTION HANDLER
-        // ============================================================
-        function handleMobileAction(action) {
-            const messages = {
-                'register': '📋 Register Patient - Coming Soon on Mobile!\nPlease use Desktop version for full functionality.',
-                'book': '📅 Book Appointment - Coming Soon on Mobile!\nPlease use Desktop version for full functionality.',
-                'payment': '💰 Record Payment - Coming Soon on Mobile!\nPlease use Desktop version for full functionality.',
-                'tracking': '📈 Patient Tracking - Coming Soon on Mobile!\nPlease use Desktop version for full functionality.',
-                'files': '📁 Patient Files - Coming Soon on Mobile!\nPlease use Desktop version for full functionality.'
-            };
-            alert(messages[action] || 'Feature coming soon!');
-        }
-
-        // ============================================================
-        // PANEL CONTENT GENERATORS
+        // PANEL CONTENT GENERATORS (Desktop Only)
         // ============================================================
         function generateDashboardContent() {
             const patients = getPatients();
@@ -1804,7 +1780,7 @@
         }
 
         // ============================================================
-        // FORM HANDLERS
+        // FORM HANDLERS (Desktop Only)
         // ============================================================
         function handleRegister(e) {
             e.preventDefault();
@@ -2209,11 +2185,11 @@
             document.getElementById('regReviewDate')?.setAttribute('value', new Date().toISOString().split('T')[0]);
 
             console.log('🦷 Bantu Dental Hub - Complete System loaded!');
-            console.log('✅ Greeting + 3D Tooth in middle section');
-            console.log('✅ Forms appear as overlay in middle section');
-            console.log('✅ Greeting + Tooth become background when forms are active');
-            console.log('✅ Animations: dissolve in/out effects applied');
-            console.log('✅ Mobile view has everything visible');
+            console.log('✅ Mobile: Navigates to separate HTML pages');
+            console.log('✅ Desktop: Panel system with overlay');
+            console.log('✅ Greeting + 3D Tooth (larger) in middle section');
+            console.log('✅ Dissolve animations on all elements');
+            console.log('✅ No glowing light effects on sidebar');
         });
     </script>
 
