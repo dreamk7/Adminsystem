@@ -33,102 +33,57 @@
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--light-gray);
+            background: var(--white);
             color: var(--dark);
             line-height: 1.6;
             overflow-x: hidden;
             max-width: 100vw;
+            min-height: 100vh;
         }
 
         /* ============================================================
-           LAYOUT
+           MOBILE - Everything Visible, Vertical Flow
            ============================================================ */
-        .app-container {
-            display: flex;
-            min-height: 100vh;
-            max-width: 100vw;
-            overflow-x: hidden;
+        .mobile-content {
+            display: block;
         }
 
-        /* ===== SIDEBAR ===== */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 240px;
+        .header {
             background: var(--white);
-            border-right: 1px solid rgba(0, 0, 0, 0.04);
-            padding: 20px 0;
-            overflow-y: auto;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            padding: 0 16px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
             z-index: 1000;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
         }
 
-        .sidebar .logo {
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .header .logo .brand .bantu { margin-right: 4px; }
+        .header .logo .brand .dental { color: var(--primary); }
+
+        .header .header-right {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 0 24px 20px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--dark);
-            text-decoration: none;
-            border-bottom: 1px solid var(--light-gray);
         }
 
-        .sidebar .logo .brand .bantu { margin-right: 6px; }
-        .sidebar .logo .brand .dental { color: var(--primary); }
-
-        .sidebar .nav-section {
-            padding: 16px 24px 8px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .sidebar .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 24px;
-            color: var(--gray);
-            text-decoration: none;
-            transition: var(--transition);
-            border-left: 3px solid transparent;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .sidebar .nav-item:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-
-        .sidebar .nav-item.active {
-            background: var(--primary-light);
-            color: var(--primary);
-            border-left-color: var(--primary);
-        }
-
-        .sidebar .nav-item .icon { font-size: 1.1rem; width: 24px; text-align: center; }
-        .sidebar .nav-divider { height: 1px; background: var(--light-gray); margin: 8px 24px; }
-
-        .sidebar .user-card {
-            padding: 16px 24px;
-            border-top: 1px solid var(--light-gray);
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .sidebar .user-card .avatar {
-            width: 40px;
-            height: 40px;
+        .header .header-right .avatar {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: var(--primary);
             color: var(--white);
@@ -136,368 +91,254 @@
             align-items: center;
             justify-content: center;
             font-weight: 600;
+            font-size: 0.8rem;
         }
 
-        .sidebar .user-card .user-info .name { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
-        .sidebar .user-card .user-info .role { font-size: 0.75rem; color: var(--gray); }
+        .header .header-right .logout-btn {
+            padding: 4px 12px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--gray);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.75rem;
+        }
 
-        .sidebar .logout-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 24px;
+        .header .header-right .logout-btn:hover {
+            background: #fee2e2;
             color: var(--danger);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 0.9rem;
-            cursor: pointer;
-            border: none;
-            background: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 12px;
             width: 100%;
-            font-family: 'Inter', sans-serif;
         }
 
-        .sidebar .logout-btn:hover { background: #fee2e2; }
-
-        /* ===== HAMBURGER ===== */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            padding: 8px;
-            cursor: pointer;
-            position: fixed;
-            top: 12px;
-            left: 12px;
-            z-index: 1001;
-            background: var(--white);
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-        }
-
-        .hamburger span {
-            display: block;
-            width: 26px;
-            height: 2.5px;
-            background: var(--dark);
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
-
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 999;
-        }
-        .sidebar-overlay.active { display: block; }
-
-        /* ===== MAIN CONTENT ===== */
-        .main-content {
-            flex: 1;
-            margin-left: 240px;
-            padding: 24px 32px;
-            min-height: 100vh;
-            max-width: calc(100vw - 240px);
-            overflow-x: hidden;
-        }
-
-        /* ============================================================
-           SECTIONS - Fade in/out on scroll
-           ============================================================ */
         .section-block {
             width: 100%;
-            margin-bottom: 30px;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            max-width: 100%;
-            overflow: hidden;
+            margin-bottom: 20px;
         }
 
-        .section-block.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-block.fading {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        /* ============================================================
-           SECTION 1: GREETING WITH RIVER VIDEO
-           ============================================================ */
+        /* ===== GREETING - Mobile ===== */
         .greeting-section {
-            position: relative;
+            background: var(--light-gray);
             border-radius: var(--radius);
-            overflow: hidden;
-            padding: 40px 50px;
-            color: var(--white);
-            min-height: 280px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .greeting-section .video-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        .greeting-section .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(10, 30, 47, 0.75), rgba(10, 107, 223, 0.60));
-            z-index: 1;
-        }
-
-        .greeting-section .content {
-            position: relative;
-            z-index: 2;
+            padding: 24px 16px;
             text-align: center;
             width: 100%;
         }
 
-        .greeting-section .content h1 {
-            font-size: 2.2rem;
+        .greeting-section .greeting-text {
+            font-size: 1.4rem;
             font-weight: 800;
+            color: var(--dark);
         }
 
-        .greeting-section .content h1 .highlight { color: #6ab0ff; }
-        .greeting-section .content p { color: rgba(255, 255, 255, 0.85); font-size: 1rem; }
-        .greeting-section .content .date-display { font-size: 0.9rem; opacity: 0.8; margin-top: 4px; }
+        .greeting-section .greeting-text .highlight {
+            color: var(--primary);
+        }
 
-        /* ============================================================
-           SECTION 2: 3D TOOTH (INCREASED HEIGHT)
-           ============================================================ */
+        .greeting-section .sub-text {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        .greeting-section .date-display {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        /* ===== 3D TOOTH - Mobile ===== */
         .tooth-section {
             background: var(--white);
             border-radius: var(--radius);
-            padding: 40px;
+            padding: 20px;
             box-shadow: var(--shadow);
             text-align: center;
             width: 100%;
-            min-height: 500px;
+            min-height: 250px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tooth-section .tooth-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
         }
 
         .tooth-section .tooth-wrapper img {
             max-width: 70%;
             height: auto;
-            max-height: 420px;
+            max-height: 220px;
             animation: spin3D 10s linear infinite;
-            filter: drop-shadow(0 10px 40px rgba(10, 107, 223, 0.25));
-            transition: transform 0.3s ease;
-        }
-
-        .tooth-section .tooth-wrapper img:hover {
-            animation-play-state: paused;
-            transform: scale(1.05);
+            filter: drop-shadow(0 10px 30px rgba(10, 107, 223, 0.15));
         }
 
         @keyframes spin3D {
-            0% { transform: rotateY(0deg) scale(1); }
-            50% { transform: rotateY(180deg) scale(1.03); }
-            100% { transform: rotateY(360deg) scale(1); }
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
         }
 
-        .tooth-section .tooth-label {
-            margin-top: 16px;
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-        }
-
-        .tooth-section .tooth-sub {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        /* ============================================================
-           SECTION 3: STATS (Float from left/right)
-           ============================================================ */
+        /* ===== STATS ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            gap: 10px;
             width: 100%;
         }
 
         .stat-card {
             background: var(--white);
             border-radius: var(--radius);
-            padding: 24px;
+            padding: 14px;
             box-shadow: var(--shadow);
-            transition: var(--transition);
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            border-top: 3px solid var(--primary);
             opacity: 0;
         }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary);
+        .stat-card:nth-child(1) {
+            animation: dissolveFromRight 0.8s ease forwards;
+        }
+        .stat-card:nth-child(2) {
+            animation: dissolveFromLeft 0.8s ease 0.2s forwards;
+        }
+        .stat-card:nth-child(3) {
+            animation: dissolveFromRight 0.8s ease 0.4s forwards;
+        }
+        .stat-card:nth-child(4) {
+            animation: dissolveFromLeft 0.8s ease 0.6s forwards;
         }
 
-        .stat-card.visible {
-            opacity: 1;
+        @keyframes dissolveFromLeft {
+            0% { opacity: 0; transform: translateX(-60px); }
+            100% { opacity: 1; transform: translateX(0); }
         }
 
-        .stat-card.float-right {
-            transform: translateX(80px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+        @keyframes dissolveFromRight {
+            0% { opacity: 0; transform: translateX(60px); }
+            100% { opacity: 1; transform: translateX(0); }
         }
 
-        .stat-card.float-right.visible {
-            transform: translateX(0);
+        .stat-card .stat-number {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--dark);
         }
 
-        .stat-card.float-left {
-            transform: translateX(-80px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+        .stat-card .stat-label {
+            font-size: 0.7rem;
+            color: var(--gray);
         }
 
-        .stat-card.float-left.visible {
-            transform: translateX(0);
-        }
-
-        .stat-card:nth-child(1)::before { background: var(--primary); }
-        .stat-card:nth-child(2)::before { background: var(--warning); }
-        .stat-card:nth-child(3)::before { background: var(--success); }
-        .stat-card:nth-child(4)::before { background: var(--danger); }
-
-        .stat-card:hover {
-            transform: translateY(-4px) !important;
-            box-shadow: var(--shadow-hover);
-        }
-
-        .stat-card .stat-icon { font-size: 2rem; margin-bottom: 8px; }
-        .stat-card .stat-number { font-size: 2.2rem; font-weight: 800; color: var(--dark); }
-        .stat-card .stat-label { color: var(--gray); font-size: 0.9rem; }
         .stat-card .stat-change {
+            font-size: 0.6rem;
             display: inline-block;
-            padding: 2px 8px;
+            padding: 1px 6px;
             border-radius: 20px;
-            font-size: 0.75rem;
             font-weight: 600;
-            margin-top: 4px;
+            margin-top: 2px;
         }
+
         .stat-change.up { background: #dcfce7; color: var(--success); }
         .stat-change.down { background: #fee2e2; color: var(--danger); }
 
-        /* ============================================================
-           SECTION 4: QUICK ACTIONS
-           ============================================================ */
+        /* ===== QUICK ACTIONS ===== */
         .quick-actions {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
+            gap: 10px;
             width: 100%;
         }
 
         .quick-action {
             background: var(--white);
             border-radius: var(--radius);
-            padding: 20px;
+            padding: 14px;
             text-align: center;
             box-shadow: var(--shadow);
             transition: var(--transition);
             text-decoration: none;
             color: var(--dark);
             border: 2px solid transparent;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        .quick-action:nth-child(1) {
+            animation: dissolveOut 0.8s ease forwards;
+        }
+        .quick-action:nth-child(2) {
+            animation: dissolveOut 0.8s ease 0.3s forwards;
+        }
+        .quick-action:nth-child(3) {
+            animation: dissolveOut 0.8s ease 0.6s forwards;
+        }
+        .quick-action:nth-child(4) {
+            animation: dissolveOut 0.8s ease 0.9s forwards;
+        }
+
+        @keyframes dissolveOut {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .quick-action:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
             border-color: var(--primary);
+            transform: translateY(-2px);
         }
 
-        .quick-action .icon { font-size: 2rem; display: block; margin-bottom: 4px; }
-        .quick-action .label { font-weight: 600; font-size: 0.95rem; }
-        .quick-action .sub-label { font-size: 0.75rem; color: var(--gray); }
+        .quick-action .icon { font-size: 1.5rem; display: block; }
+        .quick-action .label { font-weight: 600; font-size: 0.75rem; }
 
-        /* ============================================================
-           TWO COLUMN
-           ============================================================ */
+        /* ===== TWO COLUMN ===== */
         .two-col {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
             width: 100%;
         }
 
-        /* ============================================================
-           CARDS
-           ============================================================ */
+        .two-col .card {
+            opacity: 0;
+        }
+
+        .two-col .card:nth-child(1) {
+            animation: dissolveFromLeft 0.8s ease 0.5s forwards;
+        }
+        .two-col .card:nth-child(2) {
+            animation: dissolveFromRight 0.8s ease 0.7s forwards;
+        }
+
+        /* ===== CARDS ===== */
         .card {
             background: var(--white);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 24px;
+            padding: 14px;
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 6px;
         }
 
-        .card-header h3 { font-size: 1.1rem; font-weight: 700; }
+        .card-header h3 { font-size: 0.95rem; font-weight: 700; }
         .card-header .badge {
-            padding: 4px 12px;
+            padding: 2px 10px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             font-weight: 600;
             background: var(--primary-light);
             color: var(--primary);
         }
 
-        /* ============================================================
-           TABLES
-           ============================================================ */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -505,25 +346,23 @@
 
         table th {
             text-align: left;
-            padding: 10px 14px;
+            padding: 5px 8px;
             font-weight: 600;
             color: var(--gray);
-            font-size: 0.8rem;
-            border-bottom: 2px solid var(--light-gray);
+            font-size: 0.65rem;
+            border-bottom: 1px solid var(--light-gray);
         }
 
         table td {
-            padding: 10px 14px;
+            padding: 5px 8px;
             border-bottom: 1px solid var(--light-gray);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
 
-        table tr:hover td { background: var(--primary-light); }
-
         .status-badge {
-            padding: 3px 10px;
+            padding: 2px 8px;
             border-radius: 20px;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 600;
             display: inline-block;
         }
@@ -533,11 +372,11 @@
         .status-pending { background: var(--primary-light); color: var(--primary); }
 
         .btn {
-            padding: 6px 14px;
+            padding: 4px 10px;
             border: none;
-            border-radius: 6px;
+            border-radius: 4px;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             cursor: pointer;
             transition: var(--transition);
             text-decoration: none;
@@ -545,518 +384,947 @@
         }
 
         .btn-primary { background: var(--primary); color: var(--white); }
-        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
-        .btn-sm { padding: 4px 10px; font-size: 0.7rem; }
+        .btn-primary:hover { background: var(--primary-dark); }
 
         .no-data {
             text-align: center;
-            padding: 30px 20px;
+            padding: 16px 10px;
             color: var(--gray);
-        }
-        .no-data .icon { font-size: 2.5rem; display: block; margin-bottom: 8px; }
-
-        /* ============================================================
-           CHART
-           ============================================================ */
-        .chart-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .chart-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .chart-bar .label {
             font-size: 0.8rem;
-            font-weight: 500;
-            width: 100px;
-            flex-shrink: 0;
-            color: var(--gray);
         }
 
-        .chart-bar .bar-track {
-            flex: 1;
-            height: 22px;
-            background: var(--light-gray);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .chart-bar .bar-fill {
-            height: 100%;
-            border-radius: 12px;
-            transition: width 1s ease;
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--white);
-        }
-
-        .bar-fill.blue { background: var(--primary); }
-        .bar-fill.green { background: var(--success); }
-        .bar-fill.yellow { background: var(--warning); }
-
-        .chart-bar .percentage {
-            font-size: 0.8rem;
-            font-weight: 600;
-            min-width: 35px;
-            text-align: right;
-            color: var(--dark);
-        }
+        .no-data .icon { font-size: 1.8rem; display: block; margin-bottom: 4px; }
 
         /* ============================================================
-           MODAL
-           ============================================================ */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .modal-overlay.active { display: flex; }
-
-        .modal {
-            background: var(--white);
-            border-radius: var(--radius);
-            max-width: 500px;
-            width: 100%;
-            padding: 30px;
-            box-shadow: var(--shadow-hover);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal .close-btn {
-            float: right;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--gray);
-        }
-        .modal .close-btn:hover { color: var(--danger); }
-        .modal .form-group { margin-bottom: 16px; }
-        .modal label { display: block; font-weight: 600; margin-bottom: 4px; }
-        .modal input, .modal select {
-            width: 100%;
-            padding: 10px 14px;
-            border: 2px solid var(--light-gray);
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-        .modal input:focus, .modal select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        /* ============================================================
-           RESPONSIVE
+           DESKTOP - 3 Panel Layout
            ============================================================ */
         @media (min-width: 1025px) {
-            .hamburger { display: none !important; }
-            .sidebar-overlay { display: none !important; }
-            .sidebar { transform: translateX(0) !important; }
-            .main-content { margin-left: 240px; max-width: calc(100vw - 240px); }
+            .mobile-content { display: none !important; }
+
+            .app-container {
+                display: flex;
+                min-height: 100vh;
+                max-width: 100vw;
+                overflow: hidden;
+            }
+
+            /* ===== LEFT SIDEBAR ===== */
+            .left-sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 220px;
+                background: var(--dark);
+                color: var(--white);
+                padding: 20px 0;
+                overflow-y: auto;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .left-sidebar .logo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 0 20px 20px;
+                font-weight: 700;
+                font-size: 1rem;
+                color: var(--white);
+                text-decoration: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            }
+
+            .left-sidebar .logo .brand .bantu { margin-right: 4px; }
+            .left-sidebar .logo .brand .dental { color: #6ab0ff; }
+
+            .left-sidebar .nav-item {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 20px;
+                color: rgba(255, 255, 255, 0.6);
+                text-decoration: none;
+                transition: var(--transition);
+                border-left: 3px solid transparent;
+                cursor: pointer;
+                font-size: 0.85rem;
+                background: none;
+                border: none;
+                width: 100%;
+                font-family: 'Inter', sans-serif;
+                text-align: left;
+                overflow: hidden;
+            }
+
+            .left-sidebar .nav-item:hover {
+                background: rgba(255, 255, 255, 0.06);
+                color: var(--white);
+            }
+
+            .left-sidebar .nav-item.active {
+                background: rgba(255, 255, 255, 0.08);
+                color: var(--white);
+                border-left-color: #6ab0ff;
+            }
+
+            .left-sidebar .nav-item .icon { font-size: 1rem; width: 22px; text-align: center; }
+            .left-sidebar .nav-divider { height: 1px; background: rgba(255, 255, 255, 0.06); margin: 8px 20px; }
+
+            .left-sidebar .nav-section {
+                padding: 16px 20px 8px;
+                font-size: 0.6rem;
+                font-weight: 600;
+                color: rgba(255, 255, 255, 0.3);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .left-sidebar .user-card {
+                padding: 16px 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.06);
+                margin-top: auto;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .left-sidebar .user-card .avatar {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--white);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 600;
+                font-size: 0.9rem;
+            }
+
+            .left-sidebar .user-card .user-info .name {
+                font-weight: 600;
+                font-size: 0.85rem;
+                color: var(--white);
+            }
+
+            .left-sidebar .user-card .user-info .role {
+                font-size: 0.6rem;
+                color: rgba(255, 255, 255, 0.4);
+            }
+
+            .left-sidebar .logout-btn {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 20px;
+                color: #f87171;
+                text-decoration: none;
+                transition: var(--transition);
+                font-size: 0.85rem;
+                cursor: pointer;
+                border: none;
+                background: none;
+                width: 100%;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .left-sidebar .logout-btn:hover { background: rgba(239, 68, 68, 0.1); }
+
+            /* ===== MIDDLE CONTENT - GREETING + TOOTH ===== */
+            .middle-content {
+                flex: 1;
+                margin-left: 220px;
+                margin-right: 320px;
+                min-height: 100vh;
+                padding: 40px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                background: var(--white);
+                overflow: hidden;
+                transition: all 0.5s ease;
+            }
+
+            /* Greeting + Tooth Container */
+            .greeting-tooth-container {
+                position: relative;
+                z-index: 2;
+                text-align: center;
+                padding: 20px;
+                transition: all 0.5s ease;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+
+            .greeting-tooth-container .greeting-text {
+                font-size: 2.8rem;
+                font-weight: 800;
+                color: var(--dark);
+                margin-bottom: 4px;
+                opacity: 0;
+                animation: fadeIn 1s ease 0.5s forwards;
+            }
+
+            .greeting-tooth-container .greeting-text .highlight {
+                color: var(--primary);
+            }
+
+            .greeting-tooth-container .sub-text {
+                font-size: 1.2rem;
+                color: var(--gray);
+                margin-top: 4px;
+                opacity: 0;
+                animation: fadeIn 1s ease 1s forwards;
+            }
+
+            .greeting-tooth-container .date-display {
+                font-size: 1rem;
+                color: var(--gray);
+                margin-top: 2px;
+                opacity: 0;
+                animation: fadeIn 1s ease 1.5s forwards;
+            }
+
+            /* 3D Tooth in Middle - ENLARGED */
+            .greeting-tooth-container .tooth-wrapper {
+                opacity: 0;
+                animation: fadeIn 1s ease 1.2s forwards;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px 0;
+            }
+
+            .greeting-tooth-container .tooth-wrapper img {
+                width: 350px;
+                height: 350px;
+                object-fit: contain;
+                animation: spin3D 10s linear infinite;
+                filter: drop-shadow(0 10px 30px rgba(10, 107, 223, 0.15));
+                transition: all 0.5s ease;
+            }
+
+            @keyframes spin3D {
+                0% { transform: rotateY(0deg); }
+                100% { transform: rotateY(360deg); }
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            /* When content is active - greeting + tooth become background */
+            .middle-content.has-content .greeting-tooth-container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0.08;
+                pointer-events: none;
+                transition: all 0.5s ease;
+                scale: 0.9;
+            }
+
+            .middle-content.has-content .greeting-tooth-container .greeting-text {
+                font-size: 2.5rem;
+            }
+
+            .middle-content.has-content .greeting-tooth-container .tooth-wrapper img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .middle-content.has-content {
+                justify-content: flex-start;
+                padding-top: 30px;
+            }
+
+            /* ===== CONTENT PANEL ===== */
+            .content-panel {
+                position: relative;
+                z-index: 3;
+                width: 100%;
+                max-width: 700px;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                border-radius: var(--radius);
+                padding: 30px;
+                box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+                border: 1px solid rgba(0, 0, 0, 0.04);
+                display: none;
+                animation: slideUp 0.4s ease;
+                margin: 0 auto;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .content-panel.active {
+                display: block;
+            }
+
+            @keyframes slideUp {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .content-panel .panel-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid var(--light-gray);
+            }
+
+            .content-panel .panel-header h2 {
+                font-size: 1.3rem;
+                font-weight: 700;
+            }
+
+            .content-panel .panel-header .close-panel {
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: var(--gray);
+                transition: var(--transition);
+            }
+
+            .content-panel .panel-header .close-panel:hover {
+                color: var(--danger);
+            }
+
+            .content-panel .form-group {
+                margin-bottom: 14px;
+            }
+
+            .content-panel label {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 4px;
+                font-size: 0.85rem;
+                color: var(--dark);
+            }
+
+            .content-panel input,
+            .content-panel textarea,
+            .content-panel select {
+                width: 100%;
+                padding: 10px 14px;
+                border: 2px solid var(--light-gray);
+                border-radius: 8px;
+                font-family: 'Inter', sans-serif;
+                font-size: 0.9rem;
+                transition: var(--transition);
+                background: var(--white);
+                color: var(--dark);
+            }
+
+            .content-panel input:focus,
+            .content-panel textarea:focus,
+            .content-panel select:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(10, 107, 223, 0.1);
+            }
+
+            .content-panel textarea {
+                min-height: 70px;
+                resize: vertical;
+            }
+
+            .content-panel .btn {
+                padding: 10px 28px;
+                border: none;
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: var(--transition);
+                text-decoration: none;
+                display: inline-block;
+            }
+
+            .content-panel .btn-primary {
+                background: var(--primary);
+                color: var(--white);
+            }
+
+            .content-panel .btn-primary:hover {
+                background: var(--primary-dark);
+                transform: translateY(-2px);
+            }
+
+            .content-panel .btn-success {
+                background: var(--success);
+                color: var(--white);
+            }
+
+            .content-panel .btn-success:hover {
+                background: #16a34a;
+                transform: translateY(-2px);
+            }
+
+            .content-panel .btn-outline {
+                background: transparent;
+                border: 2px solid var(--primary);
+                color: var(--primary);
+            }
+
+            .content-panel .btn-outline:hover {
+                background: var(--primary);
+                color: var(--white);
+                transform: translateY(-2px);
+            }
+
+            .content-panel .form-actions {
+                display: flex;
+                gap: 14px;
+                margin-top: 18px;
+                flex-wrap: wrap;
+            }
+
+            .content-panel .form-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .content-panel .form-grid .full-width {
+                grid-column: 1 / -1;
+            }
+
+            /* ===== RIGHT SIDEBAR ===== */
+            .right-sidebar {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: 320px;
+                background: var(--white);
+                border-left: 1px solid rgba(0, 0, 0, 0.04);
+                padding: 20px 16px;
+                overflow-y: auto;
+                z-index: 999;
+                box-shadow: -4px 0 24px rgba(0, 0, 0, 0.04);
+            }
+
+            .right-sidebar .section-title {
+                font-size: 0.7rem;
+                font-weight: 700;
+                color: var(--gray);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 8px;
+                margin-top: 12px;
+            }
+
+            .right-sidebar .section-title:first-child {
+                margin-top: 0;
+            }
+
+            .right-sidebar .content-card {
+                background: var(--light-gray);
+                border-radius: var(--radius);
+                padding: 12px;
+                margin-bottom: 12px;
+            }
+
+            .right-sidebar .content-card .item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 5px 0;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            }
+
+            .right-sidebar .content-card .item:last-child {
+                border-bottom: none;
+            }
+
+            .right-sidebar .content-card .item .name {
+                font-weight: 500;
+                font-size: 0.8rem;
+            }
+
+            .right-sidebar .content-card .item .status {
+                font-size: 0.6rem;
+                font-weight: 600;
+                padding: 2px 8px;
+                border-radius: 20px;
+            }
+
+            .right-sidebar .content-card .item .time {
+                font-size: 0.7rem;
+                color: var(--gray);
+            }
+
+            .right-sidebar .content-card .no-data {
+                text-align: center;
+                padding: 12px 8px;
+                color: var(--gray);
+                font-size: 0.75rem;
+            }
+
+            .right-sidebar .content-card .no-data .icon {
+                font-size: 1.3rem;
+                display: block;
+                margin-bottom: 4px;
+            }
+
+            /* ===== CHART IN RIGHT SIDEBAR ===== */
+            .right-sidebar .chart-container {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                margin-top: 4px;
+            }
+
+            .right-sidebar .chart-bar {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .right-sidebar .chart-bar .label {
+                font-size: 0.65rem;
+                font-weight: 500;
+                width: 70px;
+                flex-shrink: 0;
+                color: var(--gray);
+            }
+
+            .right-sidebar .chart-bar .bar-track {
+                flex: 1;
+                height: 16px;
+                background: rgba(0, 0, 0, 0.06);
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            .right-sidebar .chart-bar .bar-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 1s ease;
+                display: flex;
+                align-items: center;
+                padding: 0 6px;
+                font-size: 0.55rem;
+                font-weight: 600;
+                color: var(--white);
+            }
+
+            .right-sidebar .chart-bar .bar-fill.blue { background: var(--primary); }
+            .right-sidebar .chart-bar .bar-fill.green { background: var(--success); }
+            .right-sidebar .chart-bar .bar-fill.yellow { background: var(--warning); }
+
+            .right-sidebar .chart-bar .percentage {
+                font-size: 0.7rem;
+                font-weight: 600;
+                min-width: 30px;
+                text-align: right;
+                color: var(--dark);
+            }
+
+            /* ===== SCROLLBAR ===== */
+            ::-webkit-scrollbar { width: 4px; }
+            ::-webkit-scrollbar-track { background: var(--light-gray); }
+            ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
         }
 
+        /* ============================================================
+           MOBILE RESPONSIVE
+           ============================================================ */
         @media (max-width: 1024px) {
-            .sidebar {
-                transform: translateX(-100%);
-                width: 280px;
-            }
-            .sidebar.open { transform: translateX(0); }
-            .sidebar-overlay.active { display: block; }
-            .hamburger { display: flex; }
-            .main-content {
-                margin-left: 0;
-                padding: 70px 16px 24px;
-                max-width: 100vw;
-            }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .quick-actions { grid-template-columns: repeat(2, 1fr); }
-            .two-col { grid-template-columns: 1fr; }
-            .tooth-section { min-height: 350px; }
-            .tooth-section .tooth-wrapper img { max-height: 280px; max-width: 80%; }
+            .app-container { display: none; }
+            .mobile-content { display: block; }
         }
 
         @media (max-width: 600px) {
-            .stats-grid { grid-template-columns: 1fr; }
-            .quick-actions { grid-template-columns: 1fr; }
-            .greeting-section { padding: 20px; min-height: 180px; }
-            .greeting-section .content h1 { font-size: 1.4rem; }
-            .tooth-section { padding: 20px; min-height: 280px; }
-            .tooth-section .tooth-wrapper img { max-height: 200px; max-width: 90%; }
-            table { font-size: 0.75rem; }
-            table th, table td { padding: 6px 8px; }
-            .section-block { margin-bottom: 16px; }
-            .main-content { padding: 56px 10px 16px; }
-            .stat-card.float-right { transform: translateX(30px); }
-            .stat-card.float-left { transform: translateX(-30px); }
-            .greeting-section .content .date-display { font-size: 0.75rem; }
-            .tooth-section .tooth-label { font-size: 1rem; }
-            .tooth-section .tooth-sub { font-size: 0.8rem; }
-            .stat-card { padding: 16px; }
-            .stat-card .stat-number { font-size: 1.6rem; }
-            .quick-action { padding: 14px; }
-            .card { padding: 16px; }
-            .card-header h3 { font-size: 1rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .quick-actions { grid-template-columns: repeat(2, 1fr); }
+            .two-col { grid-template-columns: 1fr; }
+            .greeting-section .greeting-text { font-size: 1.2rem; }
+            .tooth-section { min-height: 200px; }
+            .tooth-section .tooth-wrapper img { max-height: 160px; }
+            .stat-card .stat-number { font-size: 1.2rem; }
         }
 
         @media (max-width: 400px) {
-            .main-content { padding: 52px 8px 12px; }
-            .greeting-section .content h1 { font-size: 1.2rem; }
-            .tooth-section .tooth-wrapper img { max-height: 150px; }
-            .stat-card .stat-number { font-size: 1.3rem; }
-            .stat-card .stat-label { font-size: 0.75rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .quick-actions { grid-template-columns: 1fr; }
+            .greeting-section .greeting-text { font-size: 1rem; }
+            .tooth-section .tooth-wrapper img { max-height: 130px; }
         }
 
-        /* ===== SCROLLBAR ===== */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--light-gray); }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        /* ============================================================
+           TOAST
+           ============================================================ */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 16px 24px;
+            box-shadow: var(--shadow-hover);
+            border-left: 4px solid var(--success);
+            max-width: 400px;
+            transform: translateX(120%);
+            transition: transform 0.5s ease;
+            z-index: 3000;
+        }
 
-        /* ===== FIX FOR OVERFLOW ===== */
-        .container-fix {
-            width: 100%;
-            max-width: 100%;
-            overflow: hidden;
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast .title {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .toast .message {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .toast .close-toast {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .toast .close-toast:hover {
+            color: var(--danger);
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== SIDEBAR OVERLAY ===== -->
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-    <!-- ===== HAMBURGER ===== -->
-    <button class="hamburger" id="hamburger" onclick="toggleSidebar()">
-        <span></span><span></span><span></span>
-    </button>
-
-    <!-- ===== SIDEBAR ===== -->
-    <nav class="sidebar" id="sidebar">
-        <a href="homepage.html" class="logo">
-            <span class="brand"><span class="bantu">🦷 Bantu</span><span class="dental">Dental hub</span></span>
-        </a>
-
-        <div class="nav-section">Main Menu</div>
-        <a href="#greeting" class="nav-item active" onclick="scrollToSection('greeting')">
-            <span class="icon">👋</span> Dashboard
-        </a>
-        <a href="#tooth" class="nav-item" onclick="scrollToSection('tooth')">
-            <span class="icon">🦷</span> 3D Tooth
-        </a>
-        <a href="#stats" class="nav-item" onclick="scrollToSection('stats')">
-            <span class="icon">📊</span> Statistics
-        </a>
-        <a href="#quick-actions" class="nav-item" onclick="scrollToSection('quick-actions')">
-            <span class="icon">⚡</span> Quick Actions
-        </a>
-        <a href="#recent-patients" class="nav-item" onclick="scrollToSection('recent-patients')">
-            <span class="icon">👥</span> Patients
-        </a>
-        <a href="#appointments" class="nav-item" onclick="scrollToSection('appointments')">
-            <span class="icon">📅</span> Appointments
-        </a>
-        <a href="#reviews" class="nav-item" onclick="scrollToSection('reviews')">
-            <span class="icon">⚠️</span> Reviews
-        </a>
-
-        <div class="nav-divider"></div>
-        <a href="register.html" class="nav-item">
-            <span class="icon">📋</span> Register Patient
-        </a>
-        <a href="patient-file.html" class="nav-item">
-            <span class="icon">📁</span> Patient File
-        </a>
-        <a href="tracking.html" class="nav-item">
-            <span class="icon">📈</span> Patient Tracking
-        </a>
-
-        <div class="nav-divider"></div>
-        <div class="user-card">
-            <div class="avatar" id="sidebarAvatar">A</div>
-            <div class="user-info">
-                <div class="name" id="sidebarName">Admin</div>
-                <div class="role">Clinic Administrator</div>
-            </div>
-        </div>
-        <button class="logout-btn" onclick="logout()">🚪 Logout</button>
-    </nav>
-
     <!-- ============================================================
-    MAIN CONTENT
+    MOBILE CONTENT
     ============================================================ -->
-    <main class="main-content">
+    <div class="mobile-content" id="mobileContent">
 
-        <!-- ==========================================================
-        SECTION 1: GREETING WITH RIVER VIDEO
-        ========================================================== -->
-        <div class="section-block" id="greeting">
-            <div class="greeting-section">
-                <video class="video-bg" autoplay muted loop playsinline>
-                    <source src="https://cdn.pixabay.com/video/2022/09/21/131857-751889337_large.mp4" type="video/mp4" />
-                    <source src="https://cdn.pixabay.com/video/2020/07/28/45851-443782097_large.mp4" type="video/mp4" />
-                </video>
-                <div class="overlay"></div>
-                <div class="content">
-                    <h1>👋 Good <span id="greetingTime">Morning</span>, <span class="highlight" id="greetingName">Admin</span>!</h1>
-                    <p id="greetingSub">Here's your clinic overview for today.</p>
-                    <div class="date-display" id="dateDisplay">📅 Loading...</div>
-                </div>
+        <header class="header">
+            <a href="#" class="logo">
+                <span class="brand"><span class="bantu">🦷 Bantu</span><span class="dental">Dental hub</span></span>
+            </a>
+            <div class="header-right">
+                <div class="avatar" id="mobileAvatar">A</div>
+                <button class="logout-btn" onclick="logout()">🚪 Logout</button>
             </div>
-        </div>
+        </header>
 
-        <!-- ==========================================================
-        SECTION 2: 3D TOOTH (INCREASED HEIGHT)
-        ========================================================== -->
-        <div class="section-block" id="tooth">
-            <div class="tooth-section">
-                <div class="tooth-wrapper">
-                    <img src="dental/dental3D.jpeg" alt="3D Tooth" />
-                </div>
-                <div class="tooth-label">🦷 Your Dental Health, Our Priority</div>
-                <div class="tooth-sub">Advanced care for your smile</div>
-            </div>
-        </div>
+        <div class="container">
 
-        <!-- ==========================================================
-        SECTION 3: STATS (Float from left/right)
-        ========================================================== -->
-        <div class="section-block" id="stats">
-            <div class="stats-grid">
-                <div class="stat-card float-right" id="stat1">
-                    <div class="stat-icon">👥</div>
-                    <div class="stat-number" id="totalPatients">0</div>
-                    <div class="stat-label">Total Patients</div>
-                    <span class="stat-change up">↑ Active patients</span>
-                </div>
-                <div class="stat-card float-left" id="stat2">
-                    <div class="stat-icon">📅</div>
-                    <div class="stat-number" id="todayAppointments">0</div>
-                    <div class="stat-label">Today's Appointments</div>
-                    <span class="stat-change up">↑ Scheduled</span>
-                </div>
-                <div class="stat-card float-right" id="stat3">
-                    <div class="stat-icon">💰</div>
-                    <div class="stat-number" id="monthlyRevenue">$0</div>
-                    <div class="stat-label">Revenue This Month</div>
-                    <span class="stat-change up">↑ Growing</span>
-                </div>
-                <div class="stat-card float-left" id="stat4">
-                    <div class="stat-icon">⏳</div>
-                    <div class="stat-number" id="pendingTreatments">0</div>
-                    <div class="stat-label">Pending Treatments</div>
-                    <span class="stat-change down">↓ Needs attention</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==========================================================
-        SECTION 4: QUICK ACTIONS
-        ========================================================== -->
-        <div class="section-block" id="quick-actions">
-            <div class="quick-actions">
-                <a href="register.html" class="quick-action">
-                    <span class="icon">📋</span>
-                    <span class="label">Register Patient</span>
-                    <span class="sub-label">Add new patient to system</span>
-                </a>
-                <a href="#" class="quick-action" onclick="showAppointmentModal()">
-                    <span class="icon">📅</span>
-                    <span class="label">Book Appointment</span>
-                    <span class="sub-label">Schedule patient visit</span>
-                </a>
-                <a href="#" class="quick-action" onclick="showPaymentModal()">
-                    <span class="icon">💰</span>
-                    <span class="label">Record Payment</span>
-                    <span class="sub-label">Log patient payment</span>
-                </a>
-                <a href="tracking.html" class="quick-action">
-                    <span class="icon">📈</span>
-                    <span class="label">Patient Tracking</span>
-                    <span class="sub-label">View patient progress</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- ==========================================================
-        SECTION 5: TWO COLUMN (Recent Patients + Status Chart)
-        ========================================================== -->
-        <div class="section-block" id="recent-patients">
-            <div class="two-col">
-                <!-- Recent Patients -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3>📋 Recent Patients</h3>
-                        <a href="patient-file.html" class="btn btn-primary">View All</a>
+            <!-- GREETING -->
+            <div class="section-block">
+                <div class="greeting-section">
+                    <div class="greeting-text">
+                        👋 Good <span id="mobileGreetingTime">Morning</span>, <span class="highlight" id="mobileGreetingName">Admin</span>!
                     </div>
-                    <div id="recentPatients">
-                        <div class="no-data">
-                            <span class="icon">👥</span>
-                            <p>No patients registered yet. <a href="register.html" style="color:var(--primary);">Register your first patient</a></p>
-                        </div>
-                    </div>
+                    <div class="sub-text">Here's your clinic overview for today.</div>
+                    <div class="date-display" id="mobileDateDisplay">📅 Loading...</div>
                 </div>
+            </div>
 
-                <!-- Patient Status Chart -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3>📊 Patient Status</h3>
-                        <span class="badge" id="statusTotal">0 patients</span>
-                    </div>
-                    <div class="chart-container" id="statusChart">
-                        <div class="no-data">
-                            <span class="icon">📊</span>
-                            <p>No data available</p>
-                        </div>
+            <!-- 3D TOOTH -->
+            <div class="section-block">
+                <div class="tooth-section">
+                    <div class="tooth-wrapper">
+                        <img src="dental/dental3D.jpeg" alt="3D Tooth" />
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- ==========================================================
-        SECTION 6: APPOINTMENTS (Dissolve in)
-        ========================================================== -->
-        <div class="section-block" id="appointments">
-            <div class="card">
-                <div class="card-header">
-                    <h3>📅 Today's Appointments</h3>
-                    <span class="badge" id="appointmentCount">0 appointments</span>
+            <!-- STATS -->
+            <div class="section-block">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="mobileTotalPatients">0</div>
+                        <div class="stat-label">👥 Total Patients</div>
+                        <span class="stat-change up">↑ Active</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="mobileTodayAppointments">0</div>
+                        <div class="stat-label">📅 Today's Appointments</div>
+                        <span class="stat-change up">↑ Scheduled</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="mobileMonthlyRevenue">$0</div>
+                        <div class="stat-label">💰 Revenue This Month</div>
+                        <span class="stat-change up">↑ Growing</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="mobilePendingTreatments">0</div>
+                        <div class="stat-label">⏳ Pending Treatments</div>
+                        <span class="stat-change down">↓ Needs attention</span>
+                    </div>
                 </div>
-                <div id="todayAppointmentsList">
-                    <div class="no-data">
+            </div>
+
+            <!-- QUICK ACTIONS -->
+            <div class="section-block">
+                <div class="quick-actions">
+                    <a href="#" class="quick-action" onclick="handleMobileAction('register')">
+                        <span class="icon">📋</span>
+                        <span class="label">Register Patient</span>
+                    </a>
+                    <a href="#" class="quick-action" onclick="handleMobileAction('book')">
                         <span class="icon">📅</span>
-                        <p>No appointments scheduled for today.</p>
+                        <span class="label">Book Appointment</span>
+                    </a>
+                    <a href="#" class="quick-action" onclick="handleMobileAction('payment')">
+                        <span class="icon">💰</span>
+                        <span class="label">Record Payment</span>
+                    </a>
+                    <a href="#" class="quick-action" onclick="handleMobileAction('tracking')">
+                        <span class="icon">📈</span>
+                        <span class="label">Patient Tracking</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- TWO COLUMN -->
+            <div class="section-block">
+                <div class="two-col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>📋 Recent Patients</h3>
+                            <a href="#" class="btn btn-primary" onclick="handleMobileAction('files')">View All</a>
+                        </div>
+                        <div id="mobileRecentPatients">
+                            <div class="no-data">
+                                <span class="icon">👥</span>
+                                <p>No patients registered yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>📊 Patient Status</h3>
+                            <span class="badge" id="mobileStatusTotal">0 patients</span>
+                        </div>
+                        <div id="mobileStatusChart">
+                            <div class="no-data">
+                                <span class="icon">📊</span>
+                                <p>No data available</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- ==========================================================
-        SECTION 7: REVIEWS DUE (Dissolve in)
-        ========================================================== -->
-        <div class="section-block" id="reviews">
-            <div class="card">
-                <div class="card-header">
-                    <h3>⚠️ Reviews Due</h3>
-                    <span class="badge" id="reviewCount">0 reviews due</span>
-                </div>
-                <div id="reviewsDue">
-                    <div class="no-data">
-                        <span class="icon">✅</span>
-                        <p>No reviews due today. All patients are on track!</p>
+            <!-- APPOINTMENTS -->
+            <div class="section-block">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📅 Today's Appointments</h3>
+                        <span class="badge" id="mobileAppointmentCount">0 appointments</span>
+                    </div>
+                    <div id="mobileAppointmentsList">
+                        <div class="no-data">
+                            <span class="icon">📅</span>
+                            <p>No appointments scheduled for today.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </main>
+            <!-- REVIEWS -->
+            <div class="section-block">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>⚠️ Reviews Due</h3>
+                        <span class="badge" id="mobileReviewCount">0 reviews due</span>
+                    </div>
+                    <div id="mobileReviewsDue">
+                        <div class="no-data">
+                            <span class="icon">✅</span>
+                            <p>No reviews due today.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <!-- ==========================================================
-    APPOINTMENT MODAL
-    ========================================================== -->
-    <div class="modal-overlay" id="appointmentModal">
-        <div class="modal">
-            <button class="close-btn" onclick="closeModal('appointmentModal')">✕</button>
-            <h2>📅 Book Appointment</h2>
-            <p style="color:var(--gray); margin-bottom:16px;">Schedule a new appointment for a patient.</p>
-            <form id="appointmentForm" onsubmit="bookAppointment(event)">
-                <div class="form-group">
-                    <label for="appPatient">Patient</label>
-                    <select id="appPatient" required>
-                        <option value="">Select a patient...</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="appDate">Date</label>
-                    <input type="date" id="appDate" required />
-                </div>
-                <div class="form-group">
-                    <label for="appTime">Time</label>
-                    <select id="appTime" required>
-                        <option value="">Select time...</option>
-                        <option value="8:00 AM">8:00 AM</option>
-                        <option value="9:00 AM">9:00 AM</option>
-                        <option value="10:00 AM">10:00 AM</option>
-                        <option value="11:00 AM">11:00 AM</option>
-                        <option value="12:00 PM">12:00 PM</option>
-                        <option value="1:00 PM">1:00 PM</option>
-                        <option value="2:00 PM">2:00 PM</option>
-                        <option value="3:00 PM">3:00 PM</option>
-                        <option value="4:00 PM">4:00 PM</option>
-                        <option value="5:00 PM">5:00 PM</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="appDoctor">Doctor</label>
-                    <select id="appDoctor" required>
-                        <option value="">Select doctor...</option>
-                        <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
-                        <option value="Dr. Michael Chen">Dr. Michael Chen</option>
-                        <option value="Dr. Emily Rodriguez">Dr. Emily Rodriguez</option>
-                        <option value="Dr. James Wilson">Dr. James Wilson</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width:100%;">📅 Book Appointment</button>
-            </form>
         </div>
     </div>
 
-    <!-- ==========================================================
-    PAYMENT MODAL
-    ========================================================== -->
-    <div class="modal-overlay" id="paymentModal">
-        <div class="modal">
-            <button class="close-btn" onclick="closeModal('paymentModal')">✕</button>
-            <h2>💰 Record Payment</h2>
-            <p style="color:var(--gray); margin-bottom:16px;">Record a payment received from a patient.</p>
-            <form id="paymentForm" onsubmit="recordPayment(event)">
-                <div class="form-group">
-                    <label for="payPatient">Patient</label>
-                    <select id="payPatient" required>
-                        <option value="">Select a patient...</option>
-                    </select>
+    <!-- ============================================================
+    DESKTOP CONTENT - 3 Panel Layout
+    ============================================================ -->
+    <div class="app-container" id="desktopContent">
+
+        <!-- LEFT SIDEBAR -->
+        <nav class="left-sidebar" id="leftSidebar">
+            <a href="#" class="logo">
+                <span class="brand"><span class="bantu">🦷 Bantu</span><span class="dental">Dental hub</span></span>
+            </a>
+
+            <div class="nav-section">Main Menu</div>
+            <button class="nav-item active" onclick="showPanel('dashboard')">
+                <span class="icon">📊</span> Dashboard
+            </button>
+            <button class="nav-item" onclick="showPanel('register')">
+                <span class="icon">📋</span> Register Patient
+            </button>
+            <button class="nav-item" onclick="showPanel('files')">
+                <span class="icon">📁</span> Patient Files
+            </button>
+            <button class="nav-item" onclick="showPanel('tracking')">
+                <span class="icon">📈</span> Patient Tracking
+            </button>
+            <button class="nav-item" onclick="showPanel('appointments')">
+                <span class="icon">📅</span> Appointments
+            </button>
+            <button class="nav-item" onclick="showPanel('reviews')">
+                <span class="icon">⚠️</span> Reviews
+            </button>
+
+            <div class="nav-divider"></div>
+            <div class="nav-section">Management</div>
+            <button class="nav-item" onclick="showPanel('book')">
+                <span class="icon">📅</span> Book Appointment
+            </button>
+            <button class="nav-item" onclick="showPanel('payment')">
+                <span class="icon">💰</span> Record Payment
+            </button>
+
+            <div class="user-card">
+                <div class="avatar" id="desktopAvatar">A</div>
+                <div class="user-info">
+                    <div class="name" id="desktopName">Admin</div>
+                    <div class="role">Clinic Administrator</div>
                 </div>
-                <div class="form-group">
-                    <label for="payAmount">Amount ($)</label>
-                    <input type="number" id="payAmount" placeholder="0.00" required />
+            </div>
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+        </nav>
+
+        <!-- MIDDLE CONTENT -->
+        <main class="middle-content" id="middleContent">
+
+            <!-- Greeting + Tooth Container -->
+            <div class="greeting-tooth-container" id="greetingToothContainer">
+                <div class="greeting-text">
+                    👋 Good <span id="desktopGreetingTime">Morning</span>, <span class="highlight" id="desktopGreetingName">Admin</span>!
                 </div>
-                <div class="form-group">
-                    <label for="payMethod">Payment Method</label>
-                    <select id="payMethod" required>
-                        <option value="">Select method...</option>
-                        <option value="Cash">Cash</option>
-                        <option value="Credit Card">Credit Card</option>
-                        <option value="Debit Card">Debit Card</option>
-                        <option value="Mobile Money">Mobile Money</option>
-                        <option value="Insurance">Insurance</option>
-                    </select>
+                <div class="sub-text" id="desktopGreetingSub">Here's your clinic overview for today.</div>
+                <div class="date-display" id="desktopDateDisplay">📅 Loading...</div>
+                <div class="tooth-wrapper">
+                    <img src="dental/dental3D.jpeg" alt="3D Tooth" />
                 </div>
-                <button type="submit" class="btn btn-primary" style="width:100%; background:var(--success);">💰 Record Payment</button>
-            </form>
-        </div>
+            </div>
+
+            <!-- Content Panel -->
+            <div class="content-panel" id="contentPanel">
+                <div class="panel-header">
+                    <h2 id="panelTitle">📊 Dashboard</h2>
+                    <button class="close-panel" onclick="closePanel()">✕</button>
+                </div>
+                <div id="panelBody">
+                    <!-- Content loaded dynamically -->
+                </div>
+            </div>
+
+        </main>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="right-sidebar" id="rightSidebar">
+
+            <!-- Recent Patients -->
+            <div class="section-title">📋 Recent Patients</div>
+            <div class="content-card" id="desktopRecentPatients">
+                <div class="no-data">
+                    <span class="icon">👥</span>
+                    <p>No patients registered yet.</p>
+                </div>
+            </div>
+
+            <!-- Patient Status Chart -->
+            <div class="section-title">📊 Patient Status</div>
+            <div class="content-card" id="desktopStatusChart">
+                <div class="no-data">
+                    <span class="icon">📊</span>
+                    <p>No data available</p>
+                </div>
+            </div>
+
+            <!-- Today's Appointments -->
+            <div class="section-title">📅 Today's Appointments</div>
+            <div class="content-card" id="desktopAppointments">
+                <div class="no-data">
+                    <span class="icon">📅</span>
+                    <p>No appointments scheduled.</p>
+                </div>
+            </div>
+
+            <!-- Reviews Due -->
+            <div class="section-title">⚠️ Reviews Due</div>
+            <div class="content-card" id="desktopReviews">
+                <div class="no-data">
+                    <span class="icon">✅</span>
+                    <p>No reviews due.</p>
+                </div>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <button class="close-toast" onclick="closeToast()">✕</button>
+        <div class="title" id="toastTitle">✅ Success!</div>
+        <div class="message" id="toastMessage">Action completed successfully.</div>
     </div>
 
     <script>
         // ============================================================
-        // CHECK LOGIN
+        // DATA MANAGEMENT
+        // ============================================================
+        function getPatients() {
+            return JSON.parse(localStorage.getItem('patients')) || [];
+        }
+
+        function getAppointments() {
+            return JSON.parse(localStorage.getItem('appointments')) || [];
+        }
+
+        function getPayments() {
+            return JSON.parse(localStorage.getItem('payments')) || [];
+        }
+
+        function savePatients(patients) {
+            localStorage.setItem('patients', JSON.stringify(patients));
+        }
+
+        function saveAppointments(appointments) {
+            localStorage.setItem('appointments', JSON.stringify(appointments));
+        }
+
+        function savePayments(payments) {
+            localStorage.setItem('payments', JSON.stringify(payments));
+        }
+
+        // ============================================================
+        // AUTHENTICATION
         // ============================================================
         function checkLogin() {
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
@@ -1076,133 +1344,126 @@
         }
 
         // ============================================================
-        // DATA MANAGEMENT
+        // TOAST
         // ============================================================
-        function getPatients() {
-            return JSON.parse(localStorage.getItem('patients')) || [];
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
         }
 
-        function getAppointments() {
-            return JSON.parse(localStorage.getItem('appointments')) || [];
-        }
-
-        function getPayments() {
-            return JSON.parse(localStorage.getItem('payments')) || [];
-        }
-
-        function saveAppointments(appointments) {
-            localStorage.setItem('appointments', JSON.stringify(appointments));
-        }
-
-        function savePayments(payments) {
-            localStorage.setItem('payments', JSON.stringify(payments));
+        function closeToast() {
+            document.getElementById('toast').classList.remove('show');
         }
 
         // ============================================================
-        // SIDEBAR
+        // PANEL SYSTEM (Desktop Only)
         // ============================================================
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const hamburger = document.getElementById('hamburger');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        }
+        function showPanel(panel) {
+            const middle = document.getElementById('middleContent');
+            const panelEl = document.getElementById('contentPanel');
+            const body = document.getElementById('panelBody');
+            const title = document.getElementById('panelTitle');
 
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const hamburger = document.getElementById('hamburger');
-            sidebar.classList.remove('open');
-            overlay.classList.remove('active');
-            hamburger.classList.remove('active');
-        }
-
-        function scrollToSection(id) {
-            closeSidebar();
-            const element = document.getElementById(id);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
+            // Update active nav
+            document.querySelectorAll('.left-sidebar .nav-item').forEach(item => item.classList.remove('active'));
+            const navItems = document.querySelectorAll('.left-sidebar .nav-item');
+            const panelMap = {
+                'dashboard': 0,
+                'register': 1,
+                'files': 2,
+                'tracking': 3,
+                'appointments': 4,
+                'reviews': 5,
+                'book': 7,
+                'payment': 8
+            };
+            if (panelMap[panel] !== undefined && navItems[panelMap[panel]]) {
+                navItems[panelMap[panel]].classList.add('active');
             }
-            document.querySelectorAll('.sidebar .nav-item').forEach(item => item.classList.remove('active'));
-            document.querySelector(`.sidebar .nav-item[href="#${id}"]`)?.classList.add('active');
+
+            // Greeting + Tooth fade to background
+            middle.classList.add('has-content');
+            panelEl.classList.add('active');
+
+            // Load content
+            switch (panel) {
+                case 'dashboard':
+                    title.textContent = '📊 Dashboard';
+                    body.innerHTML = generateDashboardContent();
+                    break;
+                case 'register':
+                    title.textContent = '📋 Register Patient';
+                    body.innerHTML = generateRegisterForm();
+                    break;
+                case 'files':
+                    title.textContent = '📁 Patient Files';
+                    body.innerHTML = generatePatientFiles();
+                    break;
+                case 'tracking':
+                    title.textContent = '📈 Patient Tracking';
+                    body.innerHTML = generateTracking();
+                    break;
+                case 'appointments':
+                    title.textContent = '📅 Appointments';
+                    body.innerHTML = generateAppointments();
+                    break;
+                case 'reviews':
+                    title.textContent = '⚠️ Reviews Due';
+                    body.innerHTML = generateReviews();
+                    break;
+                case 'book':
+                    title.textContent = '📅 Book Appointment';
+                    body.innerHTML = generateBookAppointmentForm();
+                    break;
+                case 'payment':
+                    title.textContent = '💰 Record Payment';
+                    body.innerHTML = generatePaymentForm();
+                    break;
+                default:
+                    body.innerHTML = '<p>Content coming soon...</p>';
+            }
+
+            updateRightSidebar();
+        }
+
+        function closePanel() {
+            const middle = document.getElementById('middleContent');
+            const panelEl = document.getElementById('contentPanel');
+            middle.classList.remove('has-content');
+            panelEl.classList.remove('active');
+            document.querySelectorAll('.left-sidebar .nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelector('.left-sidebar .nav-item')?.classList.add('active');
         }
 
         // ============================================================
-        // SCROLL FADE IN/OUT + STATS TRIGGER
+        // MOBILE ACTION HANDLER
         // ============================================================
-        function handleScrollAnimations() {
-            const sections = document.querySelectorAll('.section-block');
-            const windowHeight = window.innerHeight;
-
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                const isVisible = rect.top < windowHeight - 50 && rect.bottom > 50;
-
-                if (isVisible) {
-                    section.classList.add('visible');
-                    section.classList.remove('fading');
-                } else {
-                    if (rect.top < 0) {
-                        section.classList.add('fading');
-                        section.classList.remove('visible');
-                    } else {
-                        section.classList.remove('visible');
-                        section.classList.remove('fading');
-                    }
-                }
-            });
-
-            // Handle stats cards separately
-            document.querySelectorAll('.stat-card').forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const isVisible = rect.top < windowHeight - 50 && rect.bottom > 50;
-                if (isVisible) {
-                    card.classList.add('visible');
-                } else {
-                    card.classList.remove('visible');
-                }
-            });
+        function handleMobileAction(action) {
+            const messages = {
+                'register': '📋 Register Patient - Coming Soon on Mobile!\nPlease use Desktop version for full functionality.',
+                'book': '📅 Book Appointment - Coming Soon on Mobile!\nPlease use Desktop version for full functionality.',
+                'payment': '💰 Record Payment - Coming Soon on Mobile!\nPlease use Desktop version for full functionality.',
+                'tracking': '📈 Patient Tracking - Coming Soon on Mobile!\nPlease use Desktop version for full functionality.',
+                'files': '📁 Patient Files - Coming Soon on Mobile!\nPlease use Desktop version for full functionality.'
+            };
+            alert(messages[action] || 'Feature coming soon!');
         }
 
         // ============================================================
-        // UPDATE GREETING
+        // PANEL CONTENT GENERATORS
         // ============================================================
-        function updateGreeting() {
-            const hour = new Date().getHours();
-            let greeting = 'Morning';
-            if (hour >= 12 && hour < 17) greeting = 'Afternoon';
-            else if (hour >= 17 && hour < 21) greeting = 'Evening';
-            else if (hour >= 21 || hour < 5) greeting = 'Night';
-
-            document.getElementById('greetingTime').textContent = greeting;
-
-            const name = localStorage.getItem('savedUsername') || 'Admin';
-            const displayName = name.charAt(0).toUpperCase() + name.slice(1);
-            document.getElementById('greetingName').textContent = displayName;
-            document.getElementById('sidebarName').textContent = displayName;
-            document.getElementById('sidebarAvatar').textContent = displayName.charAt(0).toUpperCase();
-
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('dateDisplay').textContent = '📅 ' + now.toLocaleDateString('en-US', options);
-        }
-
-        // ============================================================
-        // UPDATE DASHBOARD
-        // ============================================================
-        function updateDashboard() {
+        function generateDashboardContent() {
             const patients = getPatients();
             const appointments = getAppointments();
             const payments = getPayments();
 
-            document.getElementById('totalPatients').textContent = patients.length;
-
             const today = new Date().toISOString().split('T')[0];
             const todayApps = appointments.filter(a => a.date === today);
-            document.getElementById('todayAppointments').textContent = todayApps.length;
-            document.getElementById('appointmentCount').textContent = todayApps.length + ' appointments';
 
             const currentMonth = new Date().getMonth();
             const currentYear = new Date().getFullYear();
@@ -1211,68 +1472,212 @@
                 return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
             });
             const totalRevenue = monthlyPayments.reduce((sum, p) => sum + parseFloat(p.amount), 0);
-            document.getElementById('monthlyRevenue').textContent = '$' + totalRevenue.toFixed(2);
-
             const pending = patients.filter(p => p.status === 'pending' || p.status === 'scheduled');
-            document.getElementById('pendingTreatments').textContent = pending.length;
 
-            // Recent Patients
-            const recentPatients = patients.slice(-5).reverse();
-            const recentContainer = document.getElementById('recentPatients');
-            if (recentPatients.length === 0) {
-                recentContainer.innerHTML = `
-                    <div class="no-data">
-                        <span class="icon">👥</span>
-                        <p>No patients registered yet. <a href="register.html" style="color:var(--primary);">Register your first patient</a></p>
+            return `
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
+                    <div style="background:var(--light-gray); padding:16px; border-radius:var(--radius); text-align:center;">
+                        <div style="font-size:1.8rem; font-weight:800; color:var(--primary);">${patients.length}</div>
+                        <div style="color:var(--gray); font-size:0.8rem;">👥 Total Patients</div>
                     </div>
-                `;
-            } else {
-                let html = `<div style="overflow-x:auto;"><table><thead><tr>
-                    <th>Patient ID</th><th>Name</th><th>Treatment</th><th>Doctor</th><th>Status</th>
-                </tr></thead><tbody>`;
-                recentPatients.forEach(p => {
-                    const statusClass = p.status === 'attended' || p.status === 'completed' ? 'status-attended' : 
-                                      p.status === 'scheduled' ? 'status-scheduled' : 'status-pending';
-                    const statusText = p.status === 'attended' || p.status === 'completed' ? 'Attended' : 
-                                      p.status === 'scheduled' ? 'Scheduled' : 'Pending';
-                    html += `<tr>
-                        <td><strong>${p.id}</strong></td>
-                        <td>${p.firstName} ${p.lastName}</td>
-                        <td>${p.procedure}</td>
-                        <td>${p.doctor}</td>
-                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                    </tr>`;
-                });
-                html += '</tbody></table></div>';
-                recentContainer.innerHTML = html;
+                    <div style="background:var(--light-gray); padding:16px; border-radius:var(--radius); text-align:center;">
+                        <div style="font-size:1.8rem; font-weight:800; color:var(--warning);">${todayApps.length}</div>
+                        <div style="color:var(--gray); font-size:0.8rem;">📅 Today's Appointments</div>
+                    </div>
+                    <div style="background:var(--light-gray); padding:16px; border-radius:var(--radius); text-align:center;">
+                        <div style="font-size:1.8rem; font-weight:800; color:var(--success);">$${totalRevenue.toFixed(2)}</div>
+                        <div style="color:var(--gray); font-size:0.8rem;">💰 Revenue This Month</div>
+                    </div>
+                    <div style="background:var(--light-gray); padding:16px; border-radius:var(--radius); text-align:center;">
+                        <div style="font-size:1.8rem; font-weight:800; color:var(--danger);">${pending.length}</div>
+                        <div style="color:var(--gray); font-size:0.8rem;">⏳ Pending Treatments</div>
+                    </div>
+                </div>
+                <p style="color:var(--gray); font-size:0.85rem; text-align:center;">Click any menu item on the left to manage your clinic.</p>
+            `;
+        }
+
+        function generateRegisterForm() {
+            return `
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>First Name <span style="color:var(--danger);">*</span></label>
+                            <input type="text" id="regFirstName" placeholder="Enter first name" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name <span style="color:var(--danger);">*</span></label>
+                            <input type="text" id="regLastName" placeholder="Enter last name" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Age <span style="color:var(--danger);">*</span></label>
+                            <input type="number" id="regAge" placeholder="Age" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="regGender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone <span style="color:var(--danger);">*</span></label>
+                            <input type="tel" id="regPhone" placeholder="Enter phone number" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="regEmail" placeholder="Enter email" />
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Address</label>
+                            <input type="text" id="regAddress" placeholder="Enter address" />
+                        </div>
+                        <div class="form-group">
+                            <label>Procedure <span style="color:var(--danger);">*</span></label>
+                            <select id="regProcedure" required>
+                                <option value="">Select...</option>
+                                <option value="Dental Cleaning">Dental Cleaning</option>
+                                <option value="Root Canal">Root Canal</option>
+                                <option value="Crown">Crown</option>
+                                <option value="Veneers">Veneers</option>
+                                <option value="Teeth Whitening">Teeth Whitening</option>
+                                <option value="Dental Implant">Dental Implant</option>
+                                <option value="Extraction">Extraction</option>
+                                <option value="Filling">Filling</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Doctor <span style="color:var(--danger);">*</span></label>
+                            <select id="regDoctor" required>
+                                <option value="">Select...</option>
+                                <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+                                <option value="Dr. Michael Chen">Dr. Michael Chen</option>
+                                <option value="Dr. Emily Rodriguez">Dr. Emily Rodriguez</option>
+                                <option value="Dr. James Wilson">Dr. James Wilson</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Treatment Cost ($) <span style="color:var(--danger);">*</span></label>
+                            <input type="number" id="regCost" placeholder="0.00" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Review Date</label>
+                            <input type="date" id="regReviewDate" />
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Treatment Description</label>
+                            <textarea id="regDescription" placeholder="Describe the treatment plan..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>💊 Medication Prescription</label>
+                            <input type="text" id="regMedication" placeholder="e.g., Amoxicillin 500mg - Twice daily - 7 days" />
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">💾 Register Patient</button>
+                        <button type="reset" class="btn btn-outline">🔄 Reset</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        function generatePatientFiles() {
+            const patients = getPatients();
+            if (patients.length === 0) {
+                return `<div class="no-data"><span class="icon">📁</span><p>No patients registered yet.</p></div>`;
             }
 
-            // Today's Appointments List
-            const appContainer = document.getElementById('todayAppointmentsList');
-            if (todayApps.length === 0) {
-                appContainer.innerHTML = `<div class="no-data"><span class="icon">📅</span><p>No appointments scheduled for today.</p></div>`;
-            } else {
-                let html = `<div style="overflow-x:auto;"><table><thead><tr>
-                    <th>Patient</th><th>Time</th><th>Doctor</th><th>Status</th>
+            let html = `<div style="overflow-x:auto;"><table style="width:100%;">
+                <thead><tr style="border-bottom:2px solid var(--light-gray);">
+                    <th style="text-align:left; padding:6px 10px;">ID</th>
+                    <th style="text-align:left; padding:6px 10px;">Name</th>
+                    <th style="text-align:left; padding:6px 10px;">Treatment</th>
+                    <th style="text-align:left; padding:6px 10px;">Doctor</th>
+                    <th style="text-align:left; padding:6px 10px;">Status</th>
                 </tr></thead><tbody>`;
-                todayApps.forEach(a => {
-                    const patient = patients.find(p => p.id === a.patientId);
-                    const statusClass = a.status === 'attended' || a.status === 'completed' ? 'status-attended' : 
-                                      a.status === 'scheduled' ? 'status-scheduled' : 'status-pending';
-                    const statusText = a.status === 'attended' || a.status === 'completed' ? 'Attended' : 
-                                      a.status === 'scheduled' ? 'Scheduled' : 'Pending';
-                    html += `<tr>
-                        <td>${patient ? patient.firstName + ' ' + patient.lastName : 'Unknown'}</td>
-                        <td><strong>${a.time}</strong></td>
-                        <td>${a.doctor}</td>
-                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                    </tr>`;
-                });
-                html += '</tbody></table></div>';
-                appContainer.innerHTML = html;
+
+            patients.slice().reverse().forEach(p => {
+                const statusClass = p.status === 'attended' || p.status === 'completed' ? 'status-attended' : 
+                                  p.status === 'scheduled' ? 'status-scheduled' : 'status-pending';
+                const statusText = p.status === 'attended' || p.status === 'completed' ? 'Attended' : 
+                                  p.status === 'scheduled' ? 'Scheduled' : 'Pending';
+                html += `<tr style="border-bottom:1px solid var(--light-gray);">
+                    <td style="padding:6px 10px;"><strong>${p.id}</strong></td>
+                    <td style="padding:6px 10px;">${p.firstName} ${p.lastName}</td>
+                    <td style="padding:6px 10px;">${p.procedure}</td>
+                    <td style="padding:6px 10px;">${p.doctor}</td>
+                    <td style="padding:6px 10px;"><span class="status-badge ${statusClass}">${statusText}</span></td>
+                </tr>`;
+            });
+
+            html += '</tbody></table></div>';
+            return html;
+        }
+
+        function generateTracking() {
+            const patients = getPatients();
+            if (patients.length === 0) {
+                return `<div class="no-data"><span class="icon">📈</span><p>No patients to track.</p></div>`;
             }
 
-            // Reviews Due
+            let html = `<div style="overflow-x:auto;"><table style="width:100%;">
+                <thead><tr style="border-bottom:2px solid var(--light-gray);">
+                    <th style="text-align:left; padding:6px 10px;">Patient</th>
+                    <th style="text-align:left; padding:6px 10px;">Treatment</th>
+                    <th style="text-align:left; padding:6px 10px;">Review Date</th>
+                    <th style="text-align:left; padding:6px 10px;">Status</th>
+                </tr></thead><tbody>`;
+
+            patients.forEach(p => {
+                const statusClass = p.status === 'attended' || p.status === 'completed' ? 'status-attended' : 
+                                  p.status === 'scheduled' ? 'status-scheduled' : 'status-pending';
+                const statusText = p.status === 'attended' || p.status === 'completed' ? 'Attended' : 
+                                  p.status === 'scheduled' ? 'Scheduled' : 'Pending';
+                html += `<tr style="border-bottom:1px solid var(--light-gray);">
+                    <td style="padding:6px 10px;">${p.firstName} ${p.lastName}</td>
+                    <td style="padding:6px 10px;">${p.procedure}</td>
+                    <td style="padding:6px 10px;">${p.reviewDate || 'Not set'}</td>
+                    <td style="padding:6px 10px;"><span class="status-badge ${statusClass}">${statusText}</span></td>
+                </tr>`;
+            });
+
+            html += '</tbody></table></div>';
+            return html;
+        }
+
+        function generateAppointments() {
+            const appointments = getAppointments();
+            const patients = getPatients();
+
+            if (appointments.length === 0) {
+                return `<div class="no-data"><span class="icon">📅</span><p>No appointments scheduled.</p></div>`;
+            }
+
+            let html = `<div style="overflow-x:auto;"><table style="width:100%;">
+                <thead><tr style="border-bottom:2px solid var(--light-gray);">
+                    <th style="text-align:left; padding:6px 10px;">Patient</th>
+                    <th style="text-align:left; padding:6px 10px;">Date</th>
+                    <th style="text-align:left; padding:6px 10px;">Time</th>
+                    <th style="text-align:left; padding:6px 10px;">Doctor</th>
+                </tr></thead><tbody>`;
+
+            appointments.slice().reverse().forEach(a => {
+                const patient = patients.find(p => p.id === a.patientId);
+                html += `<tr style="border-bottom:1px solid var(--light-gray);">
+                    <td style="padding:6px 10px;">${patient ? patient.firstName + ' ' + patient.lastName : 'Unknown'}</td>
+                    <td style="padding:6px 10px;">${a.date}</td>
+                    <td style="padding:6px 10px;">${a.time}</td>
+                    <td style="padding:6px 10px;">${a.doctor}</td>
+                </tr>`;
+            });
+
+            html += '</tbody></table></div>';
+            return html;
+        }
+
+        function generateReviews() {
+            const patients = getPatients();
             const todayDate = new Date();
             const reviewsDue = patients.filter(p => {
                 if (!p.reviewDate || p.reviewDate === 'Not set') return false;
@@ -1281,206 +1686,535 @@
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 return diffDays <= 7 && diffDays >= 0;
             });
-            document.getElementById('reviewCount').textContent = reviewsDue.length + ' reviews due';
-            const reviewContainer = document.getElementById('reviewsDue');
+
             if (reviewsDue.length === 0) {
-                reviewContainer.innerHTML = `<div class="no-data"><span class="icon">✅</span><p>No reviews due today. All patients are on track!</p></div>`;
-            } else {
-                let html = `<div style="overflow-x:auto;"><table><thead><tr>
-                    <th>Patient</th><th>Treatment</th><th>Review Date</th><th>Doctor</th><th>Action</th>
-                </tr></thead><tbody>`;
-                reviewsDue.forEach(p => {
-                    html += `<tr>
-                        <td>${p.firstName} ${p.lastName}</td>
-                        <td>${p.procedure}</td>
-                        <td><strong>${p.reviewDate}</strong></td>
-                        <td>${p.doctor}</td>
-                        <td><button class="btn btn-primary btn-sm" onclick="alert('Reminder sent to ${p.firstName} ${p.lastName}')">📧 Remind</button></td>
-                    </tr>`;
-                });
-                html += '</tbody></table></div>';
-                reviewContainer.innerHTML = html;
+                return `<div class="no-data"><span class="icon">✅</span><p>No reviews due. All patients are on track!</p></div>`;
             }
 
-            // Status Chart - Updated to show "Attended" instead of "Completed"
-            updateStatusChart(patients);
+            let html = `<div style="overflow-x:auto;"><table style="width:100%;">
+                <thead><tr style="border-bottom:2px solid var(--light-gray);">
+                    <th style="text-align:left; padding:6px 10px;">Patient</th>
+                    <th style="text-align:left; padding:6px 10px;">Review Date</th>
+                    <th style="text-align:left; padding:6px 10px;">Action</th>
+                </tr></thead><tbody>`;
+
+            reviewsDue.forEach(p => {
+                html += `<tr style="border-bottom:1px solid var(--light-gray);">
+                    <td style="padding:6px 10px;">${p.firstName} ${p.lastName}</td>
+                    <td style="padding:6px 10px;"><strong>${p.reviewDate}</strong></td>
+                    <td style="padding:6px 10px;"><button class="btn btn-primary" onclick="alert('Reminder sent to ${p.firstName} ${p.lastName}')">📧 Remind</button></td>
+                </tr>`;
+            });
+
+            html += '</tbody></table></div>';
+            return html;
         }
 
-        // ============================================================
-        // UPDATE STATUS CHART - "Attended" instead of "Completed"
-        // ============================================================
-        function updateStatusChart(patients) {
-            const container = document.getElementById('statusChart');
-            const total = patients.length;
+        function generateBookAppointmentForm() {
+            const patients = getPatients();
+            let patientOptions = '<option value="">Select a patient...</option>';
+            patients.forEach(p => {
+                patientOptions += `<option value="${p.id}">${p.firstName} ${p.lastName} (${p.id})</option>`;
+            });
 
-            if (total === 0) {
-                container.innerHTML = `<div class="no-data"><span class="icon">📊</span><p>No data available</p></div>`;
-                document.getElementById('statusTotal').textContent = '0 patients';
-                return;
-            }
-
-            document.getElementById('statusTotal').textContent = total + ' patients';
-
-            const attended = patients.filter(p => p.status === 'attended' || p.status === 'completed').length;
-            const scheduled = patients.filter(p => p.status === 'scheduled').length;
-            const pending = patients.filter(p => p.status === 'pending' || !p.status).length;
-
-            const attendedPct = Math.round((attended / total) * 100);
-            const scheduledPct = Math.round((scheduled / total) * 100);
-            const pendingPct = Math.round((pending / total) * 100);
-
-            container.innerHTML = `
-                <div class="chart-bar">
-                    <span class="label">✅ Attended</span>
-                    <div class="bar-track">
-                        <div class="bar-fill green" style="width:${attendedPct}%;">${attendedPct}%</div>
+            return `
+                <form id="bookAppointmentForm" onsubmit="handleBookAppointment(event)">
+                    <div class="form-group">
+                        <label>Patient <span style="color:var(--danger);">*</span></label>
+                        <select id="bookPatient" required>${patientOptions}</select>
                     </div>
-                    <span class="percentage">${attended}</span>
-                </div>
-                <div class="chart-bar">
-                    <span class="label">📅 Scheduled</span>
-                    <div class="bar-track">
-                        <div class="bar-fill yellow" style="width:${scheduledPct}%;">${scheduledPct}%</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Date <span style="color:var(--danger);">*</span></label>
+                            <input type="date" id="bookDate" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Time <span style="color:var(--danger);">*</span></label>
+                            <select id="bookTime" required>
+                                <option value="">Select...</option>
+                                <option value="8:00 AM">8:00 AM</option>
+                                <option value="9:00 AM">9:00 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="12:00 PM">12:00 PM</option>
+                                <option value="1:00 PM">1:00 PM</option>
+                                <option value="2:00 PM">2:00 PM</option>
+                                <option value="3:00 PM">3:00 PM</option>
+                                <option value="4:00 PM">4:00 PM</option>
+                                <option value="5:00 PM">5:00 PM</option>
+                            </select>
+                        </div>
                     </div>
-                    <span class="percentage">${scheduled}</span>
-                </div>
-                <div class="chart-bar">
-                    <span class="label">⏳ Pending</span>
-                    <div class="bar-track">
-                        <div class="bar-fill blue" style="width:${pendingPct}%;">${pendingPct}%</div>
+                    <div class="form-group">
+                        <label>Doctor <span style="color:var(--danger);">*</span></label>
+                        <select id="bookDoctor" required>
+                            <option value="">Select...</option>
+                            <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+                            <option value="Dr. Michael Chen">Dr. Michael Chen</option>
+                            <option value="Dr. Emily Rodriguez">Dr. Emily Rodriguez</option>
+                            <option value="Dr. James Wilson">Dr. James Wilson</option>
+                        </select>
                     </div>
-                    <span class="percentage">${pending}</span>
-                </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">📅 Book Appointment</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        function generatePaymentForm() {
+            const patients = getPatients();
+            let patientOptions = '<option value="">Select a patient...</option>';
+            patients.forEach(p => {
+                patientOptions += `<option value="${p.id}">${p.firstName} ${p.lastName} (${p.id})</option>`;
+            });
+
+            return `
+                <form id="paymentForm" onsubmit="handlePayment(event)">
+                    <div class="form-group">
+                        <label>Patient <span style="color:var(--danger);">*</span></label>
+                        <select id="payPatient" required>${patientOptions}</select>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Amount ($) <span style="color:var(--danger);">*</span></label>
+                            <input type="number" id="payAmount" placeholder="0.00" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Method <span style="color:var(--danger);">*</span></label>
+                            <select id="payMethod" required>
+                                <option value="">Select...</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Credit Card">Credit Card</option>
+                                <option value="Debit Card">Debit Card</option>
+                                <option value="Mobile Money">Mobile Money</option>
+                                <option value="Insurance">Insurance</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Treatment</label>
+                        <input type="text" id="payTreatment" placeholder="Treatment description" />
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">💰 Record Payment</button>
+                    </div>
+                </form>
             `;
         }
 
         // ============================================================
-        // APPOINTMENT MODAL
+        // FORM HANDLERS
         // ============================================================
-        function showAppointmentModal() {
-            const modal = document.getElementById('appointmentModal');
-            const select = document.getElementById('appPatient');
+        function handleRegister(e) {
+            e.preventDefault();
+            const firstName = document.getElementById('regFirstName')?.value;
+            const lastName = document.getElementById('regLastName')?.value;
+            const age = document.getElementById('regAge')?.value;
+            const gender = document.getElementById('regGender')?.value;
+            const phone = document.getElementById('regPhone')?.value;
+            const email = document.getElementById('regEmail')?.value || 'N/A';
+            const address = document.getElementById('regAddress')?.value || 'N/A';
+            const procedure = document.getElementById('regProcedure')?.value;
+            const doctor = document.getElementById('regDoctor')?.value;
+            const cost = document.getElementById('regCost')?.value;
+            const reviewDate = document.getElementById('regReviewDate')?.value || 'Not set';
+            const description = document.getElementById('regDescription')?.value || 'Standard treatment';
+            const medication = document.getElementById('regMedication')?.value || 'None prescribed';
+
+            if (!firstName || !lastName || !age || !phone || !procedure || !doctor || !cost) {
+                showToast('❌ Error', 'Please fill in all required fields.');
+                return;
+            }
+
             const patients = getPatients();
-            select.innerHTML = '<option value="">Select a patient...</option>';
-            patients.forEach(p => {
-                select.innerHTML += `<option value="${p.id}">${p.firstName} ${p.lastName} (${p.id})</option>`;
-            });
-            document.getElementById('appDate').value = new Date().toISOString().split('T')[0];
-            modal.classList.add('active');
+            const patientId = 'BD-' + new Date().getFullYear() + '-' + String(patients.length + 1).padStart(4, '0');
+
+            const patient = {
+                id: patientId,
+                firstName, lastName, age, gender, phone, email, address,
+                procedure, doctor,
+                treatmentCost: parseFloat(cost),
+                reviewDate,
+                treatmentDesc: description,
+                medication: { name: medication },
+                status: 'pending',
+                registrationDate: new Date().toISOString().split('T')[0]
+            };
+
+            patients.push(patient);
+            savePatients(patients);
+            showToast('✅ Success!', `Patient ${firstName} ${lastName} registered with ID: ${patientId}`);
+            closePanel();
+            updateAllViews();
         }
 
-        function bookAppointment(e) {
+        function handleBookAppointment(e) {
             e.preventDefault();
-            const patientId = document.getElementById('appPatient').value;
-            const date = document.getElementById('appDate').value;
-            const time = document.getElementById('appTime').value;
-            const doctor = document.getElementById('appDoctor').value;
+            const patientId = document.getElementById('bookPatient')?.value;
+            const date = document.getElementById('bookDate')?.value;
+            const time = document.getElementById('bookTime')?.value;
+            const doctor = document.getElementById('bookDoctor')?.value;
 
             if (!patientId || !date || !time || !doctor) {
-                alert('Please fill in all fields.');
+                showToast('❌ Error', 'Please fill in all fields.');
                 return;
             }
 
             const appointments = getAppointments();
             appointments.push({
                 id: 'APT-' + String(appointments.length + 1).padStart(4, '0'),
-                patientId: patientId,
-                date: date,
-                time: time,
-                doctor: doctor,
+                patientId, date, time, doctor,
                 status: 'scheduled',
                 createdAt: new Date().toISOString()
             });
             saveAppointments(appointments);
-            closeModal('appointmentModal');
-            alert('✅ Appointment booked successfully!');
-            updateDashboard();
+            showToast('✅ Success!', 'Appointment booked successfully.');
+            closePanel();
+            updateAllViews();
         }
 
-        // ============================================================
-        // PAYMENT MODAL
-        // ============================================================
-        function showPaymentModal() {
-            const modal = document.getElementById('paymentModal');
-            const select = document.getElementById('payPatient');
-            const patients = getPatients();
-            select.innerHTML = '<option value="">Select a patient...</option>';
-            patients.forEach(p => {
-                select.innerHTML += `<option value="${p.id}">${p.firstName} ${p.lastName} (${p.id})</option>`;
-            });
-            modal.classList.add('active');
-        }
-
-        function recordPayment(e) {
+        function handlePayment(e) {
             e.preventDefault();
-            const patientId = document.getElementById('payPatient').value;
-            const amount = document.getElementById('payAmount').value;
-            const method = document.getElementById('payMethod').value;
+            const patientId = document.getElementById('payPatient')?.value;
+            const amount = document.getElementById('payAmount')?.value;
+            const method = document.getElementById('payMethod')?.value;
+            const treatment = document.getElementById('payTreatment')?.value || 'General treatment';
 
             if (!patientId || !amount || !method) {
-                alert('Please fill in all fields.');
+                showToast('❌ Error', 'Please fill in all fields.');
                 return;
             }
 
             const payments = getPayments();
             payments.push({
                 id: 'PAY-' + String(payments.length + 1).padStart(4, '0'),
-                patientId: patientId,
+                patientId,
                 amount: parseFloat(amount),
-                method: method,
+                method,
+                treatment,
                 date: new Date().toISOString().split('T')[0]
             });
             savePayments(payments);
-            closeModal('paymentModal');
-            alert('✅ Payment recorded successfully!');
-            updateDashboard();
+            showToast('✅ Success!', 'Payment recorded successfully.');
+            closePanel();
+            updateAllViews();
         }
 
         // ============================================================
-        // MODAL HELPERS
+        // UPDATE ALL VIEWS
         // ============================================================
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
+        function updateAllViews() {
+            updateMobileView();
+            updateRightSidebar();
+            const panelBody = document.getElementById('panelBody');
+            const panelTitle = document.getElementById('panelTitle');
+            if (panelBody && panelTitle && panelTitle.textContent.includes('Dashboard')) {
+                panelBody.innerHTML = generateDashboardContent();
+            }
         }
 
         // ============================================================
-        // CLOSE MODALS ON OVERLAY CLICK
+        // UPDATE MOBILE VIEW
         // ============================================================
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                }
+        function updateMobileView() {
+            const patients = getPatients();
+            const appointments = getAppointments();
+            const payments = getPayments();
+
+            const today = new Date().toISOString().split('T')[0];
+            const todayApps = appointments.filter(a => a.date === today);
+
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            const monthlyPayments = payments.filter(p => {
+                const d = new Date(p.date);
+                return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
             });
-        });
+            const totalRevenue = monthlyPayments.reduce((sum, p) => sum + parseFloat(p.amount), 0);
+            const pending = patients.filter(p => p.status === 'pending' || p.status === 'scheduled');
+
+            document.getElementById('mobileTotalPatients').textContent = patients.length;
+            document.getElementById('mobileTodayAppointments').textContent = todayApps.length;
+            document.getElementById('mobileMonthlyRevenue').textContent = '$' + totalRevenue.toFixed(2);
+            document.getElementById('mobilePendingTreatments').textContent = pending.length;
+
+            // Recent Patients
+            const recentContainer = document.getElementById('mobileRecentPatients');
+            const recentPatients = patients.slice(-4).reverse();
+            if (recentPatients.length === 0) {
+                recentContainer.innerHTML = `<div class="no-data"><span class="icon">👥</span><p>No patients registered yet.</p></div>`;
+            } else {
+                let html = '';
+                recentPatients.forEach(p => {
+                    const statusClass = p.status === 'attended' || p.status === 'completed' ? 'status-attended' : 
+                                      p.status === 'scheduled' ? 'status-scheduled' : 'status-pending';
+                    const statusText = p.status === 'attended' || p.status === 'completed' ? 'Attended' : 
+                                      p.status === 'scheduled' ? 'Scheduled' : 'Pending';
+                    html += `<div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid var(--light-gray);">
+                        <span>${p.firstName} ${p.lastName}</span>
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </div>`;
+                });
+                recentContainer.innerHTML = html;
+            }
+
+            // Status Chart
+            const statusContainer = document.getElementById('mobileStatusChart');
+            const total = patients.length;
+            if (total === 0) {
+                statusContainer.innerHTML = `<div class="no-data"><span class="icon">📊</span><p>No data available</p></div>`;
+                document.getElementById('mobileStatusTotal').textContent = '0 patients';
+            } else {
+                document.getElementById('mobileStatusTotal').textContent = total + ' patients';
+                const attended = patients.filter(p => p.status === 'attended' || p.status === 'completed').length;
+                const scheduled = patients.filter(p => p.status === 'scheduled').length;
+                const pending = patients.filter(p => p.status === 'pending' || !p.status).length;
+                const attendedPct = Math.round((attended / total) * 100);
+                const scheduledPct = Math.round((scheduled / total) * 100);
+                const pendingPct = Math.round((pending / total) * 100);
+                statusContainer.innerHTML = `
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:0.75rem; width:70px;">✅ Attended</span>
+                            <div style="flex:1; height:18px; background:var(--light-gray); border-radius:10px; overflow:hidden;">
+                                <div style="height:100%; width:${attendedPct}%; background:var(--success); border-radius:10px; display:flex; align-items:center; padding:0 6px; font-size:0.6rem; color:white;">${attendedPct}%</div>
+                            </div>
+                            <span style="font-size:0.75rem; min-width:30px;">${attended}</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:0.75rem; width:70px;">📅 Scheduled</span>
+                            <div style="flex:1; height:18px; background:var(--light-gray); border-radius:10px; overflow:hidden;">
+                                <div style="height:100%; width:${scheduledPct}%; background:var(--warning); border-radius:10px; display:flex; align-items:center; padding:0 6px; font-size:0.6rem; color:white;">${scheduledPct}%</div>
+                            </div>
+                            <span style="font-size:0.75rem; min-width:30px;">${scheduled}</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:0.75rem; width:70px;">⏳ Pending</span>
+                            <div style="flex:1; height:18px; background:var(--light-gray); border-radius:10px; overflow:hidden;">
+                                <div style="height:100%; width:${pendingPct}%; background:var(--primary); border-radius:10px; display:flex; align-items:center; padding:0 6px; font-size:0.6rem; color:white;">${pendingPct}%</div>
+                            </div>
+                            <span style="font-size:0.75rem; min-width:30px;">${pending}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Appointments
+            const appContainer = document.getElementById('mobileAppointmentsList');
+            document.getElementById('mobileAppointmentCount').textContent = todayApps.length + ' appointments';
+            if (todayApps.length === 0) {
+                appContainer.innerHTML = `<div class="no-data"><span class="icon">📅</span><p>No appointments scheduled for today.</p></div>`;
+            } else {
+                let html = '';
+                todayApps.forEach(a => {
+                    const patient = patients.find(p => p.id === a.patientId);
+                    html += `<div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid var(--light-gray);">
+                        <span>${patient ? patient.firstName + ' ' + patient.lastName : 'Unknown'} - ${a.time}</span>
+                        <span class="status-badge status-scheduled">Scheduled</span>
+                    </div>`;
+                });
+                appContainer.innerHTML = html;
+            }
+
+            // Reviews
+            const reviewContainer = document.getElementById('mobileReviewsDue');
+            const todayDate = new Date();
+            const reviewsDue = patients.filter(p => {
+                if (!p.reviewDate || p.reviewDate === 'Not set') return false;
+                const reviewDate = new Date(p.reviewDate);
+                const diffTime = reviewDate - todayDate;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                return diffDays <= 7 && diffDays >= 0;
+            });
+            document.getElementById('mobileReviewCount').textContent = reviewsDue.length + ' reviews due';
+            if (reviewsDue.length === 0) {
+                reviewContainer.innerHTML = `<div class="no-data"><span class="icon">✅</span><p>No reviews due today.</p></div>`;
+            } else {
+                let html = '';
+                reviewsDue.forEach(p => {
+                    html += `<div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid var(--light-gray);">
+                        <span>${p.firstName} ${p.lastName} - <strong>${p.reviewDate}</strong></span>
+                        <button class="btn btn-primary" onclick="alert('Reminder sent to ${p.firstName} ${p.lastName}')">📧 Remind</button>
+                    </div>`;
+                });
+                reviewContainer.innerHTML = html;
+            }
+        }
+
+        // ============================================================
+        // UPDATE RIGHT SIDEBAR (Desktop)
+        // ============================================================
+        function updateRightSidebar() {
+            const patients = getPatients();
+            const appointments = getAppointments();
+            const today = new Date().toISOString().split('T')[0];
+            const todayApps = appointments.filter(a => a.date === today);
+
+            // Recent Patients
+            const recentContainer = document.getElementById('desktopRecentPatients');
+            const recentPatients = patients.slice(-4).reverse();
+            if (recentPatients.length === 0) {
+                recentContainer.innerHTML = `<div class="no-data"><span class="icon">👥</span><p>No patients registered yet.</p></div>`;
+            } else {
+                let html = '';
+                recentPatients.forEach(p => {
+                    const statusClass = p.status === 'attended' || p.status === 'completed' ? 'status-attended' : 
+                                      p.status === 'scheduled' ? 'status-scheduled' : 'status-pending';
+                    const statusText = p.status === 'attended' || p.status === 'completed' ? 'Attended' : 
+                                      p.status === 'scheduled' ? 'Scheduled' : 'Pending';
+                    html += `
+                        <div class="item">
+                            <span class="name">${p.firstName} ${p.lastName}</span>
+                            <span class="status ${statusClass}">${statusText}</span>
+                        </div>
+                    `;
+                });
+                recentContainer.innerHTML = html;
+            }
+
+            // Patient Status Chart
+            const chartContainer = document.getElementById('desktopStatusChart');
+            const total = patients.length;
+            if (total === 0) {
+                chartContainer.innerHTML = `<div class="no-data"><span class="icon">📊</span><p>No data available</p></div>`;
+            } else {
+                const attended = patients.filter(p => p.status === 'attended' || p.status === 'completed').length;
+                const scheduled = patients.filter(p => p.status === 'scheduled').length;
+                const pending = patients.filter(p => p.status === 'pending' || !p.status).length;
+                const attendedPct = Math.round((attended / total) * 100);
+                const scheduledPct = Math.round((scheduled / total) * 100);
+                const pendingPct = Math.round((pending / total) * 100);
+
+                chartContainer.innerHTML = `
+                    <div class="chart-container">
+                        <div class="chart-bar">
+                            <span class="label">✅ Attended</span>
+                            <div class="bar-track">
+                                <div class="bar-fill green" style="width:${attendedPct}%;">${attendedPct}%</div>
+                            </div>
+                            <span class="percentage">${attended}</span>
+                        </div>
+                        <div class="chart-bar">
+                            <span class="label">📅 Scheduled</span>
+                            <div class="bar-track">
+                                <div class="bar-fill yellow" style="width:${scheduledPct}%;">${scheduledPct}%</div>
+                            </div>
+                            <span class="percentage">${scheduled}</span>
+                        </div>
+                        <div class="chart-bar">
+                            <span class="label">⏳ Pending</span>
+                            <div class="bar-track">
+                                <div class="bar-fill blue" style="width:${pendingPct}%;">${pendingPct}%</div>
+                            </div>
+                            <span class="percentage">${pending}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Today's Appointments
+            const appContainer = document.getElementById('desktopAppointments');
+            if (todayApps.length === 0) {
+                appContainer.innerHTML = `<div class="no-data"><span class="icon">📅</span><p>No appointments scheduled today.</p></div>`;
+            } else {
+                let html = '';
+                todayApps.forEach(a => {
+                    const patient = patients.find(p => p.id === a.patientId);
+                    const statusClass = a.status === 'attended' || a.status === 'completed' ? 'status-attended' : 
+                                      a.status === 'scheduled' ? 'status-scheduled' : 'status-pending';
+                    const statusText = a.status === 'attended' || a.status === 'completed' ? 'Attended' : 
+                                      a.status === 'scheduled' ? 'Scheduled' : 'Pending';
+                    html += `
+                        <div class="item">
+                            <span class="name">${patient ? patient.firstName + ' ' + patient.lastName : 'Unknown'}</span>
+                            <span class="time">${a.time}</span>
+                            <span class="status ${statusClass}">${statusText}</span>
+                        </div>
+                    `;
+                });
+                appContainer.innerHTML = html;
+            }
+
+            // Reviews Due
+            const reviewContainer = document.getElementById('desktopReviews');
+            const todayDate = new Date();
+            const reviewsDue = patients.filter(p => {
+                if (!p.reviewDate || p.reviewDate === 'Not set') return false;
+                const reviewDate = new Date(p.reviewDate);
+                const diffTime = reviewDate - todayDate;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                return diffDays <= 7 && diffDays >= 0;
+            });
+            if (reviewsDue.length === 0) {
+                reviewContainer.innerHTML = `<div class="no-data"><span class="icon">✅</span><p>No reviews due.</p></div>`;
+            } else {
+                let html = '';
+                reviewsDue.slice(0, 4).forEach(p => {
+                    html += `
+                        <div class="item">
+                            <span class="name">${p.firstName} ${p.lastName}</span>
+                            <button class="btn btn-primary" onclick="alert('Reminder sent to ${p.firstName} ${p.lastName}')">📧 Remind</button>
+                        </div>
+                    `;
+                });
+                reviewContainer.innerHTML = html;
+            }
+        }
+
+        // ============================================================
+        // UPDATE GREETINGS
+        // ============================================================
+        function updateGreetings() {
+            const hour = new Date().getHours();
+            let greeting = 'Morning';
+            if (hour >= 12 && hour < 17) greeting = 'Afternoon';
+            else if (hour >= 17 && hour < 21) greeting = 'Evening';
+            else if (hour >= 21 || hour < 5) greeting = 'Night';
+
+            document.getElementById('mobileGreetingTime').textContent = greeting;
+            document.getElementById('desktopGreetingTime').textContent = greeting;
+
+            const name = localStorage.getItem('savedUsername') || 'Admin';
+            const displayName = name.charAt(0).toUpperCase() + name.slice(1);
+
+            document.getElementById('mobileGreetingName').textContent = displayName;
+            document.getElementById('mobileAvatar').textContent = displayName.charAt(0).toUpperCase();
+            document.getElementById('desktopGreetingName').textContent = displayName;
+            document.getElementById('desktopName').textContent = displayName;
+            document.getElementById('desktopAvatar').textContent = displayName.charAt(0).toUpperCase();
+
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = '📅 ' + now.toLocaleDateString('en-US', options);
+
+            document.getElementById('mobileDateDisplay').textContent = dateStr;
+            document.getElementById('desktopDateDisplay').textContent = dateStr;
+        }
 
         // ============================================================
         // INITIALIZE
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             if (!checkLogin()) return;
-            updateGreeting();
-            updateDashboard();
+            updateGreetings();
+            updateMobileView();
+            updateRightSidebar();
 
-            setTimeout(handleScrollAnimations, 100);
+            // Show dashboard by default on desktop
+            showPanel('dashboard');
 
-            let ticking = false;
-            window.addEventListener('scroll', function() {
-                if (!ticking) {
-                    window.requestAnimationFrame(function() {
-                        handleScrollAnimations();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
+            // Set default date for forms
+            document.getElementById('bookDate')?.setAttribute('value', new Date().toISOString().split('T')[0]);
+            document.getElementById('regReviewDate')?.setAttribute('value', new Date().toISOString().split('T')[0]);
 
-            setInterval(updateDashboard, 30000);
+            console.log('🦷 Bantu Dental Hub - Complete System loaded!');
+            console.log('✅ Greeting + 3D Tooth in middle section');
+            console.log('✅ Forms appear as overlay in middle section');
+            console.log('✅ Greeting + Tooth become background when forms are active');
+            console.log('✅ Animations: dissolve in/out effects applied');
+            console.log('✅ Mobile view has everything visible');
         });
-
-        console.log('🦷 Bantu Dental Hub - Fixed Dashboard loaded!');
-        console.log('✅ Features: Larger 3D tooth, No horizontal scroll, Dissolve effects fixed');
-        console.log('✅ Patient status shows "Attended" instead of "Completed"');
     </script>
 
 </body>
